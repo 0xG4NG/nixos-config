@@ -1,0 +1,21 @@
+# Claude Code
+.claude/
+
+# Secrets / credenciales
+secrets/
+*.age
+*.pem
+*.key
+*.env
+
+# Nix
+result
+result-*
+.direnv/
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
