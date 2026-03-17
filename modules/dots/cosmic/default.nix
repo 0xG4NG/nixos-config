@@ -17,10 +17,14 @@
       active_hint = 2;
       gaps = cosmicLib.cosmic.mkRON "tuple" [ 4 4  ];
       accent = cosmicLib.cosmic.mkRON "optional" {
-        blue = 1;
-        green = 0.0;
-        red = 0.0;
+        red   = 0.92;
+        green = 0.93;
+        blue  = 0.95;
       };
+    };
+
+    appearance.toolkit = {
+      icon_theme = "Papirus";
     };
 
     appearance.theme.light = {

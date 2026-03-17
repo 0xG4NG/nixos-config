@@ -35,6 +35,7 @@
     claude-code
     btop-rocm
     bitwarden-cli
+    papirus-icon-theme
   ];
 
   # Steam
