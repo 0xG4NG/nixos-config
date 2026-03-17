@@ -19,5 +19,7 @@
     rsync
     ripgrep
     jq
+    fastfetch
+    starship
   ];
 }
