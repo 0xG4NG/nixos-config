@@ -38,6 +38,7 @@
     papirus-icon-theme
   ];
 
+
   # Steam
   programs.steam.enable = true;
 

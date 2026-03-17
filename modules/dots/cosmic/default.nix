@@ -24,7 +24,26 @@
     };
 
     appearance.toolkit = {
-      icon_theme = "Papirus";
+      apply_theme_global = false;
+      icon_theme = "Papirus-Dark";
+
+    };
+
+    compositor = {
+
+      active_hint = true;
+      autotile = true;
+      autotile_behavior = cosmicLib.cosmic.mkRON "enum" "Global";
+      cursor_follows_focus = false;
+      descale_xwayland = false;
+      edge_snap_threshold = 0;
+      focus_follows_cursor = false;
+      focus_follows_cursor_delay = 250;
+      workspaces = {
+        workspace_layout = cosmicLib.cosmic.mkRON "enum" "Horizontal";
+        workspace_mode = cosmicLib.cosmic.mkRON "enum" "OutputBound";
+
+      };
     };
 
     appearance.theme.light = {
