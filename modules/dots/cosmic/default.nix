@@ -1,4 +1,4 @@
-{ ... }:
+{ cosmicLib, ... }:
 
 {
   wayland.desktopManager.cosmic = {
@@ -15,11 +15,11 @@
     appearance.theme.dark = {
       is_frosted = true;
       active_hint = 2;
-      cosmicLib.cosmic.mkRON = {
-        alpha = 1.0;
-        blue = 1.0;
+      gaps = cosmicLib.cosmic.mkRON "tuple" [ 4 4  ];
+      accent = cosmicLib.cosmic.mkRON "optional" {
+        blue = 1;
         green = 0.0;
-        red = 1;
+        red = 0.0;
       };
     };
 
