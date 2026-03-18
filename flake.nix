@@ -5,20 +5,28 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    cosmic-manager = {
-      url = "github:HeitorAugustoLN/cosmic-manager";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
+      inputs.noctalia-qs.follows = "noctalia-qs";
+    };
+    noctalia-qs = {
+      url = "github:noctalia-dev/noctalia-qs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, cosmic-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, noctalia, ... }: {
     nixosConfigurations = {
       toledo = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
         modules = [
           home-manager.nixosModules.home-manager
-          { home-manager.sharedModules = [ cosmic-manager.homeManagerModules.default ]; }
+          {
+            home-manager.sharedModules = [ noctalia.homeModules.default ];
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
           ./hosts/_common
           ./hosts/toledo
         ];

@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 {
-  # Nix
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
     automatic = true;
@@ -10,7 +9,6 @@
   };
   nixpkgs.config.allowUnfree = true;
 
-  # Paquetes base en todos los hosts
   environment.systemPackages = with pkgs; [
     wget
     git

@@ -4,7 +4,8 @@
   imports = [
     ../../modules/dots/ghostty
     ../../modules/dots/tmux
-    ../../modules/dots/cosmic
+    ../../modules/dots/niri
+    ../../modules/dots/noctalia
     ./git.nix
   ];
 
