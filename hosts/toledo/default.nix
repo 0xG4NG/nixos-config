@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/davinci-resolve
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -13,7 +14,6 @@
 
   services.displayManager.sddm.enable = true;
   services.xserver.enable = true;
-  #services.displayManager.sddm.wayland.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   networking.hostName = "toledo";
@@ -44,7 +44,6 @@
     kdePackages.polkit-kde-agent-1
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     sunshine
-    davinci-resolve
     ffmpeg
   ];
 
@@ -76,19 +75,6 @@
     openssl
     curl
     glib
-  ];
-
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [
-      rocmPackages.clr.icd
-      rocmPackages.rocm-runtime
-    ];
-  };
-
-  systemd.tmpfiles.rules = [
-    "L+ /opt/rocm/hip - - - - ${pkgs.rocmPackages.clr}"
   ];
 
   home-manager = {
