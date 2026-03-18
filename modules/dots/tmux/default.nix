@@ -11,24 +11,20 @@
     prefix = "C-a";
     terminal = "tmux-256color";
     extraConfig = ''
-      # Ventanas y paneles desde el índice 1
       set -g pane-base-index 1
       set-window-option -g pane-base-index 1
       set-option -g renumber-windows on
 
-      # Colores 24-bit
       set-option -sa terminal-overrides ",xterm*:Tc"
 
-      # Kitty graphics passthrough (para fastfetch, etc.)
+      # Kitty graphics protocol (needed for fastfetch images)
       set -g allow-passthrough on
       set -ga update-environment TERM
       set -ga update-environment TERM_PROGRAM
 
-      # Split con la misma ruta
       bind '"' split-window -v -c "#{pane_current_path}"
       bind % split-window -h -c "#{pane_current_path}"
 
-      # Barra de estado
       set -g status-position top
     '';
   };

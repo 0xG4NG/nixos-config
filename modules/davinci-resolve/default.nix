@@ -1,13 +1,10 @@
 { pkgs, ... }:
 
 {
-  # DaVinci Resolve con workarounds para RDNA 4 (gfx1201)
-  # - Rusticl (Mesa OpenCL) en lugar de ROCm OpenCL
-  # - Stub de libProResRAW.so para evitar crash ABI con GCC 15
-
   environment.systemPackages = [
-    # DaVinci Resolve: stub de libProResRAW.so en LD_LIBRARY_PATH para evitar
-    # crash ABI de std::filesystem (libProResRAW.so compilada con GCC viejo, incompatible con GCC 15)
+    # Bundled libProResRAW.so exports _M_split_cmpts with old GCC ABI,
+    # causing segfaults when Rusticl resolves it via symbol interposition.
+    # This stub shadows it with no-op implementations.
     (let
       proResStub = pkgs.runCommand "libProResRAW-stub" {
         nativeBuildInputs = [ pkgs.gcc ];
@@ -58,10 +55,14 @@
         STUB
         gcc -shared -o $out/lib/libProResRAW.so stub.c
       '';
-    in pkgs.writeShellScriptBin "davinci-resolve" ''
-      export LD_LIBRARY_PATH="${proResStub}/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-      exec ${pkgs.davinci-resolve}/bin/davinci-resolve "$@"
-    '')
+      wrapper = pkgs.writeShellScriptBin "davinci-resolve" ''
+        export LD_LIBRARY_PATH="${proResStub}/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+        exec ${pkgs.davinci-resolve}/bin/davinci-resolve "$@"
+      '';
+    in pkgs.symlinkJoin {
+      name = "davinci-resolve-wrapped";
+      paths = [ wrapper pkgs.davinci-resolve ];
+    })
     pkgs.clinfo
   ];
 
@@ -69,25 +70,19 @@
     enable = true;
     enable32Bit = true;
     extraPackages = with pkgs; [
-      # Rusticl: OpenCL de Mesa, soporta RDNA 4 nativamente
-      mesa.opencl
-      # ROCm para HIP (btop-rocm, etc.) — sin .icd para evitar conflicto con Rusticl
+      mesa.opencl # Rusticl — ROCm has no RDNA 4 (gfx1201) support yet
       rocmPackages.clr
       rocmPackages.rocm-runtime
     ];
   };
 
-  # ROCm: symlink para HIP
   systemd.tmpfiles.rules = [
     "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
   ];
 
   environment.variables = {
-    # Activar Rusticl para OpenCL con el driver radeonsi
     RUSTICL_ENABLE = "radeonsi";
-    # Forzar ruta de ICD OpenCL (accesible dentro del sandbox bwrap de DaVinci)
-    OCL_ICD_VENDORS = "/run/opengl-driver/etc/OpenCL/vendors";
-    # Override GFX version para ROCm/HIP (btop-rocm, etc.)
+    OCL_ICD_VENDORS = "/run/opengl-driver/etc/OpenCL/vendors"; # visible inside bwrap sandbox
     HSA_OVERRIDE_GFX_VERSION = "11.0.0";
   };
 }

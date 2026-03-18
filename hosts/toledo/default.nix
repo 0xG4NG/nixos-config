@@ -83,7 +83,7 @@
     users.g4ng = { imports = [
       ../../users/g4ng/home.nix
       ../../modules/dots/ghostty
-      #../../modules/dots/tmux
+      # ../../modules/dots/tmux
       ../../modules/dots/niri
       ../../modules/dots/noctalia
       ../../modules/dots/fastfetch
