@@ -18,6 +18,5 @@
     ripgrep
     jq
     fastfetch
-    starship
   ];
 }

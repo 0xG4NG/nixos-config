@@ -8,110 +8,31 @@
 
     logo = {
       type = "builtin";
-      source = "nixos_small";
+      source = "nixos";
       color = {
-        "1" = "blue";
-        "2" = "cyan";
-      };
-      padding = {
-        top = 1;
-        left = 2;
-        right = 1;
-      };
-    };
-
-    display = {
-      separator = "  ";
-      color = {
-        keys = "cyan";
-        title = "blue";
-        separator = "white";
+        "1" = "white";
+        "2" = "white";
       };
     };
 
     modules = [
-      {
-        type = "title";
-        format = "{6}{7}{8}";
-        color = {
-          user = "blue";
-          at = "white";
-          host = "cyan";
-        };
-      }
+      "title"
       "separator"
-      {
-        type = "os";
-        key = " os";
-        keyColor = "blue";
-      }
-      {
-        type = "kernel";
-        key = " kern";
-        keyColor = "blue";
-      }
-      {
-        type = "uptime";
-        key = "󰔟 up";
-        keyColor = "blue";
-      }
-      {
-        type = "packages";
-        key = "󰏗 pkgs";
-        keyColor = "blue";
-      }
-      {
-        type = "shell";
-        key = " sh";
-        keyColor = "cyan";
-      }
-      {
-        type = "terminal";
-        key = " term";
-        keyColor = "cyan";
-      }
-      {
-        type = "wm";
-        key = "󱂬 wm";
-        keyColor = "cyan";
-      }
-      {
-        type = "display";
-        key = "󰍹 res";
-        keyColor = "cyan";
-      }
+      "os"
+      "kernel"
+      "uptime"
+      "packages"
+      "shell"
+      "terminal"
+      "wm"
+      "display"
       "separator"
-      {
-        type = "cpu";
-        key = " cpu";
-        keyColor = "magenta";
-        showPeCoreCount = true;
-        temp = true;
-      }
-      {
-        type = "gpu";
-        key = "󰿵 gpu";
-        keyColor = "magenta";
-        temp = true;
-        driverSpecific = true;
-      }
-      {
-        type = "memory";
-        key = "󰍛 ram";
-        keyColor = "magenta";
-      }
-      {
-        type = "disk";
-        key = "󰋊 disk";
-        keyColor = "magenta";
-        folders = "/";
-      }
+      "cpu"
+      "gpu"
+      "memory"
+      "disk"
       "separator"
-      {
-        type = "colors";
-        paddingLeft = 1;
-        symbol = "circle";
-      }
+      "colors"
     ];
   };
 }

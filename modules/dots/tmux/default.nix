@@ -19,6 +19,11 @@
       # Colores 24-bit
       set-option -sa terminal-overrides ",xterm*:Tc"
 
+      # Kitty graphics passthrough (para fastfetch, etc.)
+      set -g allow-passthrough on
+      set -ga update-environment TERM
+      set -ga update-environment TERM_PROGRAM
+
       # Split con la misma ruta
       bind '"' split-window -v -c "#{pane_current_path}"
       bind % split-window -h -c "#{pane_current_path}"

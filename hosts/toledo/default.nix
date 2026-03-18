@@ -9,11 +9,12 @@
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.timeout = 15;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.kernelModules = [ "amdgpu"];
 
   services.displayManager.sddm.enable = true;
   services.xserver.enable = true;
   #services.displayManager.sddm.wayland.enable = true;
-  #services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   networking.hostName = "toledo";
   networking.networkmanager.enable = true;
@@ -28,7 +29,7 @@
   users.users.g4ng = {
     isNormalUser = true;
     description = "g4ng";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "render" ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -42,6 +43,9 @@
     fuzzel
     kdePackages.polkit-kde-agent-1
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+    sunshine
+    davinci-resolve
+    ffmpeg
   ];
 
   security.rtkit.enable = true;
@@ -74,13 +78,26 @@
     glib
   ];
 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      rocmPackages.clr.icd
+      rocmPackages.rocm-runtime
+    ];
+  };
+
+  systemd.tmpfiles.rules = [
+    "L+ /opt/rocm/hip - - - - ${pkgs.rocmPackages.clr}"
+  ];
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     users.g4ng = { imports = [
       ../../users/g4ng/home.nix
       ../../modules/dots/ghostty
-      ../../modules/dots/tmux
+      #../../modules/dots/tmux
       ../../modules/dots/niri
       ../../modules/dots/noctalia
       ../../modules/dots/fastfetch

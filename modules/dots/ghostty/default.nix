@@ -15,7 +15,6 @@
       adjust-cell-height = "50%";
       font-thicken = true;
       font-thicken-strength = 120;
-      command = "/etc/profiles/per-user/g4ng/bin/tmux";
       keybind = [
         "global:cmd+shift+space=toggle_quick_terminal"
       ];
