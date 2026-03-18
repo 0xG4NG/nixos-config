@@ -63,6 +63,7 @@
   };
 
   services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
 
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
@@ -76,7 +77,14 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.g4ng = import ../../users/g4ng/home.nix;
+    users.g4ng = { imports = [
+      ../../users/g4ng/home.nix
+      ../../modules/dots/ghostty
+      ../../modules/dots/tmux
+      ../../modules/dots/niri
+      ../../modules/dots/noctalia
+      ../../modules/dots/fastfetch
+    ]; };
   };
 
   system.stateVersion = "25.11";

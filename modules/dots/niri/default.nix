@@ -6,6 +6,7 @@
         MOZ_ENABLE_WAYLAND "1"
         MOZ_DBUS_REMOTE "1"
         LANG "C.UTF-8"
+        NO_AT_BRIDGE "1"
     }
 
     output "DP-2" {
@@ -22,9 +23,13 @@
         variable-refresh-rate
     }
 
+    input {
+        focus-follows-mouse
+    }
+
     prefer-no-csd
     screenshot-path "~/screenshots/Screenshot-%Y-%m-%d-%H-%M-%S.png"
-    spawn-sh-at-startup "swaybg -i ~/Documents/bg.png"
+    spawn-sh-at-startup "swaybg -i ~/wallpapers/wallhaven-839g92.png"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
     spawn-at-startup "noctalia-shell"
 
@@ -67,6 +72,7 @@
 
     binds {
         Mod+Return { spawn "ghostty"; }
+        Mod+E { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
         Mod+A { spawn "firefox"; }
         Mod+X { spawn "foot" "-a" "launcher" "-e" "fsel" "-d"; }
         Mod+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-select"; }

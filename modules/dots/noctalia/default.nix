@@ -1,5 +1,8 @@
 { ... }:
 {
+  home.file."wallpapers/wallhaven-839g92.png".source = ./wallpapers/wallhaven-839g92.png;
+  home.file."wallpapers/wallhaven-e8xlgw.png".source = ./wallpapers/wallhaven-e8xlgw.png;
+
   programs.noctalia-shell = {
     enable = true;
     colors = {
@@ -213,7 +216,7 @@
         wallpaper = {
           enabled = true;
           overviewEnabled = false;
-          directory = "";
+          directory = "/home/g4ng/wallpapers";
           monitorDirectories = [ ];
           enableMultiMonitorDirectories = false;
           showHiddenFiles = false;
@@ -270,9 +273,9 @@
           terminalCommand = "ghostty -e";
           customLaunchPrefixEnabled = false;
           customLaunchPrefix = "";
-          viewMode = "list";
+          viewMode = "grid";
           showCategories = true;
-          iconMode = "tabler";
+          iconMode = "system";
           showIconBackground = false;
           enableSettingsSearch = true;
           enableWindowsSearch = true;
