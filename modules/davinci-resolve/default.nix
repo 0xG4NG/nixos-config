@@ -70,7 +70,7 @@
     enable = true;
     enable32Bit = true;
     extraPackages = with pkgs; [
-      mesa.opencl # Rusticl — ROCm has no RDNA 4 (gfx1201) support yet
+      mesa.opencl
       rocmPackages.clr
       rocmPackages.rocm-runtime
     ];
@@ -82,7 +82,7 @@
 
   environment.variables = {
     RUSTICL_ENABLE = "radeonsi";
-    OCL_ICD_VENDORS = "/run/opengl-driver/etc/OpenCL/vendors"; # visible inside bwrap sandbox
+    OCL_ICD_VENDORS = "/run/opengl-driver/etc/OpenCL/vendors";
     HSA_OVERRIDE_GFX_VERSION = "11.0.0";
   };
 }
