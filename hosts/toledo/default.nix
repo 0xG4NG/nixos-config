@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs,lib, ... }:
 
 {
   imports = [
@@ -7,7 +7,6 @@
     ../../users/g4ng
     ../../modules/davinci-resolve
     ../../modules/stylix
-    ../../modules/misc/ryzen-undervolting
   ];
 
   boot.loader.systemd-boot.enable             = true;
@@ -51,6 +50,7 @@
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     sunshine
     ffmpeg
+    orca-slicer
   ];
 
   security.rtkit.enable = true;
@@ -83,7 +83,9 @@
     glib
   ];
 
-  misc.ryzen-undervolting.enable = true;
+  # amd_pstate: governor para desktop Zen 4 (7950X)
+  # ryzenadj solo soporta mobile, no sirve para desktop
+  powerManagement.cpuFreqGovernor = "schedutil";
 
   home-manager = {
     useGlobalPkgs       = false;
@@ -91,6 +93,6 @@
     backupFileExtension = "backup";
     users.g4ng.imports  = [ ../../users/g4ng/dots.nix ];
   };
-
+  
   system.stateVersion = "25.11";
 }

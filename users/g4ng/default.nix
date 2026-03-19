@@ -15,6 +15,4 @@
       gid = 1000;
     };
   };
-
-  programs.zsh.enable = true;
 }

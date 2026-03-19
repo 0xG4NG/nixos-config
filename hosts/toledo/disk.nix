@@ -1,6 +1,10 @@
 { ... }:
 
 {
+  # enableConfig = false: disko solo documenta el layout, los mounts los gestiona
+  # hardware-configuration.nix con las UUIDs reales de las particiones.
+  disko.enableConfig = false;
+
   disko.devices = {
     disk = {
       main = {
