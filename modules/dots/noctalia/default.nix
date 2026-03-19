@@ -5,24 +5,6 @@
 
   programs.noctalia-shell = {
     enable = true;
-    colors = {
-      mSurface          = "#0a0a0a";
-      mSurfaceVariant   = "#1a1a1a";
-      mHover            = "#2a2a2a";
-      mOnSurface        = "#e0e0e0";
-      mOnSurfaceVariant = "#a0a0a0";
-      mOnHover          = "#ffffff";
-      mOutline          = "#3a3a3a";
-      mPrimary          = "#ffffff";
-      mOnPrimary        = "#0a0a0a";
-      mSecondary        = "#c0c0c0";
-      mOnSecondary      = "#0a0a0a";
-      mTertiary         = "#808080";
-      mOnTertiary       = "#0a0a0a";
-      mError            = "#ff5555";
-      mOnError          = "#0a0a0a";
-      mShadow           = "#000000";
-    };
     settings = {
         settingsVersion = 0;
         bar = {
@@ -32,13 +14,11 @@
           density = "default";
           showOutline = false;
           showCapsule = true;
-          capsuleOpacity = 1;
           capsuleColorKey = "none";
           widgetSpacing = 6;
           contentPadding = 2;
           fontScale = 1;
           enableExclusionZoneInset = true;
-          backgroundOpacity = 0.93;
           useSeparateOpacity = false;
           floating = false;
           marginVertical = 4;
@@ -170,14 +150,11 @@
           reverseScroll = false;
         };
         ui = {
-          fontDefault = "Liberation Sans";
-          fontFixed = "Liberation Mono";
           fontDefaultScale = 1;
           fontFixedScale = 1;
           tooltipsEnabled = true;
           scrollbarAlwaysVisible = true;
           boxBorderEnabled = false;
-          panelBackgroundOpacity = 0.93;
           translucentWidgets = false;
           panelsAttachedToBar = true;
           settingsPanelMode = "attached";
@@ -377,7 +354,6 @@
           position = "bottom";
           displayMode = "auto_hide";
           dockType = "floating";
-          backgroundOpacity = 1;
           floatingRatio = 1;
           size = 1;
           onlySameOutput = true;
@@ -468,7 +444,6 @@
           monitors = [ ];
           location = "top_right";
           overlayLayer = true;
-          backgroundOpacity = 1;
           respectExpireTimeout = false;
           lowUrgencyDuration = 3;
           normalUrgencyDuration = 8;
@@ -497,7 +472,6 @@
           location = "top_right";
           autoHideMs = 2000;
           overlayLayer = true;
-          backgroundOpacity = 1;
           enabledTypes = [
             0
             1

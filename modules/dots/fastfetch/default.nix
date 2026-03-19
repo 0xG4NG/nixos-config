@@ -10,8 +10,13 @@
       type = "builtin";
       source = "nixos";
       color = {
-        "1" = "white";
-        "2" = "white";
+        "1" = "#c1c1c1";
+        "2" = "#fbcb97";
+        "3" = "#c1c1c1";
+        "4" = "#fbcb97";
+        "5" = "#c1c1c1";
+        "6" = "#fbcb97";
+
       };
     };
 

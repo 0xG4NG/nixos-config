@@ -4,23 +4,33 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/davinci-resolve
+    ../../modules/stylix
   ];
 
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable             = true;
   boot.loader.systemd-boot.configurationLimit = 10;
-  boot.loader.timeout = 15;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = [ "amdgpu"];
+  boot.loader.timeout                         = 15;
+  boot.loader.efi.canTouchEfiVariables        = true;
+  boot.initrd.kernelModules                   = [ "amdgpu" ];
 
-  services.displayManager.sddm.enable = true;
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.displayManager.sddm.enable  = true;
+  services.xserver.enable              = true;
+  services.xserver.videoDrivers        = [ "amdgpu" ];
 
-  networking.hostName = "toledo";
-  networking.networkmanager.enable = true;
+  networking.hostName                = "toledo";
+  networking.networkmanager.enable   = true;
+  networking.interfaces.enp13s0 = {
+    useDHCP = false;
+    ipv4.addresses = [{
+      address      = "192.168.1.120";
+      prefixLength = 24;
+    }];
+  };
+  networking.defaultGateway = "192.168.1.1";
+  networking.nameservers    = [ "192.168.1.104" ];
 
-  console.keyMap = "us-acentos";
-  i18n.defaultLocale = "es_ES.UTF-8";
+  console.keyMap        = "us-acentos";
+  i18n.defaultLocale    = "es_ES.UTF-8";
   i18n.supportedLocales = [
     "en_US.UTF-8/UTF-8"
     "es_ES.UTF-8/UTF-8"
@@ -28,12 +38,11 @@
 
   users.users.g4ng = {
     isNormalUser = true;
-    description = "g4ng";
-    extraGroups = [ "networkmanager" "wheel" "video" "render" ];
+    description  = "g4ng";
+    extraGroups  = [ "networkmanager" "wheel" "video" "render" ];
   };
 
   environment.systemPackages = with pkgs; [
-    vscode
     claude-code
     btop-rocm
     bitwarden-cli
@@ -49,26 +58,26 @@
 
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = true;
-    alsa.enable = true;
+    enable            = true;
+    alsa.enable       = true;
     alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
+    pulse.enable      = true;
+    jack.enable       = true;
   };
 
-  programs.steam.enable = true;
+  programs.steam.enable   = true;
   programs.firefox.enable = true;
-  programs.niri.enable = true;
+  programs.niri.enable    = true;
 
   xdg.portal = {
-    enable = true;
+    enable       = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  services.gnome.gnome-keyring.enable = true;
+  services.gnome.gnome-keyring.enable           = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
 
-  programs.nix-ld.enable = true;
+  programs.nix-ld.enable    = true;
   programs.nix-ld.libraries = with pkgs; [
     stdenv.cc.cc.lib
     zlib
@@ -78,15 +87,19 @@
   ];
 
   home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
+    useGlobalPkgs       = true;
+    useUserPackages     = true;
+    backupFileExtension = "backup";
     users.g4ng = { imports = [
       ../../users/g4ng/home.nix
       ../../modules/dots/ghostty
-      # ../../modules/dots/tmux
       ../../modules/dots/niri
       ../../modules/dots/noctalia
       ../../modules/dots/fastfetch
+      ../../modules/dots/zen-browser
+      ../../modules/dots/nvf
+      ../../modules/dots/obsidian
+      ../../modules/dots/vscode
     ]; };
   };
 

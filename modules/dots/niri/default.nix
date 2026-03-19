@@ -1,5 +1,8 @@
-{ ... }:
+{ config, ... }:
 
+let
+  c = config.lib.stylix.colors.withHashtag;
+in
 {
   xdg.configFile."niri/config.kdl".text = ''
     environment {
@@ -29,7 +32,7 @@
 
     prefer-no-csd
     screenshot-path "~/screenshots/Screenshot-%Y-%m-%d-%H-%M-%S.png"
-    spawn-sh-at-startup "swaybg -i ~/wallpapers/wallhaven-839g92.png"
+    spawn-sh-at-startup "swaybg -i ${config.stylix.image}"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
     spawn-at-startup "noctalia-shell"
 
@@ -46,14 +49,14 @@
         }
         border {
             width 2
-            active-color "#f2cdcd"
-            inactive-color "#89b4fa"
-            urgent-color "#f38ba8"
+            active-color "${c.base0E}"
+            inactive-color "${c.base03}"
+            urgent-color "${c.base08}"
         }
     }
 
     overview {
-        backdrop-color "#181825"
+        backdrop-color "${c.base01}"
     }
 
     window-rule {
