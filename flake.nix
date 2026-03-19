@@ -7,6 +7,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,26 +43,54 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, noctalia, stylix, zen-browser, nvf, ... }: {
-    nixosConfigurations = {
-      toledo = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          stylix.nixosModules.stylix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.sharedModules = [
-              noctalia.homeModules.default
-              zen-browser.homeModules.default
-              nvf.homeManagerModules.default
-            ];
-            home-manager.extraSpecialArgs = { inherit inputs zen-browser; };
-          }
-          ./hosts/_common
-          ./hosts/toledo
+  outputs = inputs@{ self, nixpkgs, home-manager, disko, agenix, noctalia, stylix, zen-browser, nvf, ... }:
+    let
+      lib    = nixpkgs.lib;
+      system = "x86_64-linux";
+      pkgs   = nixpkgs.legacyPackages.${system};
+
+      mkHost = { host, hostSystem ? system }:
+        nixpkgs.lib.nixosSystem {
+          system = hostSystem;
+          specialArgs = { inherit inputs; };
+          modules = [
+            disko.nixosModules.disko
+            stylix.nixosModules.stylix
+            agenix.nixosModules.default
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.sharedModules = [
+                noctalia.homeModules.default
+                zen-browser.homeModules.default
+                nvf.homeManagerModules.default
+              ];
+              home-manager.extraSpecialArgs = { inherit inputs zen-browser; };
+            }
+            ./hosts/_common
+            ./hosts/${host}
+          ];
+        };
+
+      # Auto-descubrimiento: cualquier subdirectorio en hosts/ que no sea _common
+      hostDirs  = builtins.readDir ./hosts;
+      hostNames = builtins.attrNames (lib.filterAttrs (name: type:
+        type == "directory" && name != "_common"
+      ) hostDirs);
+    in
+    {
+      nixosConfigurations = builtins.listToAttrs (map (host: {
+        name  = host;
+        value = mkHost { inherit host; };
+      }) hostNames);
+
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [
+          pkgs.just
+          pkgs.nh
+          pkgs.deadnix
+          pkgs.nixfmt-rfc-style
+          agenix.packages.${system}.default
         ];
       };
     };
-  };
 }

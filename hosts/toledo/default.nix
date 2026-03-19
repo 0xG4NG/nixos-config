@@ -3,8 +3,11 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./disk.nix
+    ../../users/g4ng
     ../../modules/davinci-resolve
     ../../modules/stylix
+    ../../modules/misc/ryzen-undervolting
   ];
 
   boot.loader.systemd-boot.enable             = true;
@@ -35,12 +38,6 @@
     "en_US.UTF-8/UTF-8"
     "es_ES.UTF-8/UTF-8"
   ];
-
-  users.users.g4ng = {
-    isNormalUser = true;
-    description  = "g4ng";
-    extraGroups  = [ "networkmanager" "wheel" "video" "render" ];
-  };
 
   environment.systemPackages = with pkgs; [
     claude-code
@@ -86,21 +83,13 @@
     glib
   ];
 
+  misc.ryzen-undervolting.enable = true;
+
   home-manager = {
-    useGlobalPkgs       = true;
-    useUserPackages     = true;
+    useGlobalPkgs       = false;
+    useUserPackages     = false;
     backupFileExtension = "backup";
-    users.g4ng = { imports = [
-      ../../users/g4ng/home.nix
-      ../../modules/dots/ghostty
-      ../../modules/dots/niri
-      ../../modules/dots/noctalia
-      ../../modules/dots/fastfetch
-      ../../modules/dots/zen-browser
-      ../../modules/dots/nvf
-      ../../modules/dots/obsidian
-      ../../modules/dots/vscode
-    ]; };
+    users.g4ng.imports  = [ ../../users/g4ng/dots.nix ];
   };
 
   system.stateVersion = "25.11";
