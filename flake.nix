@@ -36,9 +36,14 @@
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, disko, noctalia, stylix, zen-browser, nvf, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, disko, noctalia, stylix, zen-browser, nvf, sops-nix, ... }:
     let
       lib    = nixpkgs.lib;
       system = "x86_64-linux";
@@ -52,6 +57,7 @@
             disko.nixosModules.disko
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
             {
               home-manager.sharedModules = [
                 noctalia.homeModules.default
@@ -83,6 +89,8 @@
           pkgs.nh
           pkgs.deadnix
           pkgs.nixfmt-rfc-style
+          pkgs.sops
+          pkgs.age
         ];
       };
     };

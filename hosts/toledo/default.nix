@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, ... }:
+{ pkgs, inputs, lib, config, ... }:
 
 {
   imports = [
@@ -20,17 +20,43 @@
   services.xserver.enable              = true;
   services.xserver.videoDrivers        = [ "amdgpu" ];
 
-  networking.hostName                = "toledo";
-  networking.networkmanager.enable   = true;
-  networking.interfaces.enp13s0 = {
-    useDHCP = false;
-    ipv4.addresses = [{
-      address      = "192.168.1.120";
-      prefixLength = 24;
-    }];
+  sops.defaultSopsFile = ../../secrets/toledo.yaml;
+  sops.age.keyFile     = "/etc/age/keys.txt";
+  sops.secrets.wifi_psk = {};
+  sops.templates.wifi-env = {
+    content = "WIFI_PSK=${config.sops.placeholder.wifi_psk}";
+    path    = "/run/secrets/wifi-env";
   };
-  networking.defaultGateway = "192.168.1.1";
-  networking.nameservers    = [ "192.168.1.104" ];
+
+  networking.hostName              = "toledo";
+  networking.networkmanager.enable = true;
+  networking.networkmanager.ensureProfiles = {
+    environmentFiles = [ config.sops.templates.wifi-env.path ];
+    profiles."DIGIFIBRA-PLUS-DbXz" = {
+      connection = {
+        id   = "DIGIFIBRA-PLUS-DbXz";
+        type = "wifi";
+      };
+      wifi = {
+        mode = "infrastructure";
+        ssid = "DIGIFIBRA-PLUS-DbXz";
+      };
+      wifi-security = {
+        auth-alg = "open";
+        key-mgmt  = "wpa-psk";
+        psk       = "$WIFI_PSK";
+      };
+      ipv4 = {
+        method   = "manual";
+        address1 = "192.168.1.120/24,192.168.1.1";
+        dns      = "192.168.1.104";
+      };
+      ipv6 = {
+        method        = "auto";
+        addr-gen-mode = "stable-privacy";
+      };
+    };
+  };
 
   console.keyMap        = "us-acentos";
   i18n.defaultLocale    = "es_ES.UTF-8";
@@ -39,7 +65,10 @@
     "es_ES.UTF-8/UTF-8"
   ];
 
+  hardware.i2c.enable = true;
+
   environment.systemPackages = with pkgs; [
+    ddcutil
     claude-code
     btop-rocm
     bitwarden-cli
@@ -53,6 +82,7 @@
     ffmpeg
     orca-slicer
     bitwarden-desktop
+    obsidian
   ];
 
   security.rtkit.enable = true;
@@ -90,9 +120,12 @@
     role    = "client";
     user    = "g4ng";
     dataDir = "/home/g4ng";
+    overrideDevices = true;
+    overrideFolders = false;
     devices = {
       proxmox = {
-        id = "ZDR47VZ-J2FNFSV-7XX6KQY-6EJDS6C-GA6XS4G-VBJH6XD-D4U27LT-X7CXRQX";
+        id                = "ZDR47VZ-J2FNFSV-7XX6KQY-6EJDS6C-GA6XS4G-VBJH6XD-D4U27LT-X7CXRQX";
+        autoAcceptFolders = true;
       };
     };
     folders = {

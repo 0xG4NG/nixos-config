@@ -1,5 +1,10 @@
-{ ... }:
+{ pkgs, ... }:
 {
+  gtk.iconTheme = {
+    package = pkgs.papirus-icon-theme;
+    name = "Papirus-Dark";
+  };
+
   home.file."wallpapers/wallhaven-839g92.png".source = ./wallpapers/wallhaven-839g92.png;
   home.file."wallpapers/wallhaven-e8xlgw.png".source = ./wallpapers/wallhaven-e8xlgw.png;
 

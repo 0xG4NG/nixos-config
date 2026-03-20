@@ -9,7 +9,6 @@
     ../../modules/dots/fastfetch
     ../../modules/dots/zen-browser
     ../../modules/dots/nvf
-    ../../modules/dots/obsidian
     ../../modules/dots/vscode
   ];
 

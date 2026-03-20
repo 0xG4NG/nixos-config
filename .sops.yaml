@@ -1,0 +1,8 @@
+keys:
+  - &toledo age10prc9j3uu03exr554w8pyh6dmt0v5vpuxkd3z209tymryx76tgqqhn554v
+
+creation_rules:
+  - path_regex: secrets/toledo\.yaml$
+    key_groups:
+      - age:
+          - *toledo

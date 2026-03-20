@@ -7,8 +7,8 @@
     autoEnable = true;
     image = ./wallpapers/wallhaven-839g92.png;
     base16Scheme = {
-      base00 = "#141414";
-      base01 = "#121212";
+      base00 = "#202020";
+      base01 = "#212121";
       base02 = "#222222";
       base03 = "#333333";
       base04 = "#999999";

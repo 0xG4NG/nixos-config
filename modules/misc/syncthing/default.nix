@@ -26,6 +26,18 @@ in
       description = "Directorio de datos (donde viven las carpetas sincronizadas).";
     };
 
+    overrideDevices = lib.mkOption {
+      type    = lib.types.bool;
+      default = true;
+      description = "Elimina dispositivos no declarados en Nix.";
+    };
+
+    overrideFolders = lib.mkOption {
+      type    = lib.types.bool;
+      default = true;
+      description = "Elimina carpetas no declaradas en Nix.";
+    };
+
     devices = lib.mkOption {
       default     = {};
       description = "Dispositivos conocidos (peers).";
@@ -71,7 +83,9 @@ in
       enable      = true;
       user        = cfg.user;
       dataDir     = cfg.dataDir;
-      openDefaultPorts = true;
+      openDefaultPorts  = true;
+      overrideDevices   = cfg.overrideDevices;
+      overrideFolders   = cfg.overrideFolders;
 
       settings = {
         # En servidor exponemos la GUI en la red; en cliente solo localhost

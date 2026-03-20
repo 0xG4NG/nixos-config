@@ -15,14 +15,6 @@ in
     output "DP-2" {
         mode "3840x2160@143.999"
         scale 1.5
-        position x=0 y=0
-        variable-refresh-rate
-    }
-
-    output "DP-1" {
-        mode "3840x2160@144.000"
-        scale 1.5
-        position x=2560 y=0
         variable-refresh-rate
     }
 
