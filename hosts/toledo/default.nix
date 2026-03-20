@@ -7,6 +7,7 @@
     ../../users/g4ng
     ../../modules/davinci-resolve
     ../../modules/stylix
+    ../../modules/misc/syncthing
   ];
 
   boot.loader.systemd-boot.enable             = true;
@@ -51,6 +52,7 @@
     sunshine
     ffmpeg
     orca-slicer
+    bitwarden-desktop
   ];
 
   security.rtkit.enable = true;
@@ -83,8 +85,25 @@
     glib
   ];
 
-  # amd_pstate: governor para desktop Zen 4 (7950X)
-  # ryzenadj solo soporta mobile, no sirve para desktop
+  misc.syncthing = {
+    enable  = true;
+    role    = "client";
+    user    = "g4ng";
+    dataDir = "/home/g4ng";
+    devices = {
+      proxmox = {
+        id = "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX";
+      };
+    };
+    folders = {
+      obsidian-vault = {
+        path    = "/home/g4ng/Documents/Obsidian";
+        devices = [ "proxmox" ];
+        type    = "sendreceive";
+      };
+    };
+  };
+
   powerManagement.cpuFreqGovernor = "schedutil";
 
   home-manager = {
