@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 {
-  nixpkgs.config.allowUnfree = true;
   stylix.targets.vscode.enable = true;
 
   programs.vscode = {

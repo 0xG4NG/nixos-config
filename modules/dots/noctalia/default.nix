@@ -38,46 +38,22 @@
           showOnWorkspaceSwitch = true;
           widgets = {
             left = [
-              {
-                id = "Launcher";
-              }
-              {
-                id = "Clock";
-              }
-              {
-                id = "SystemMonitor";
-              }
-              {
-                id = "ActiveWindow";
-              }
-              {
-                id = "MediaMini";
-              }
+              { id = "Launcher"; }
+              { id = "Clock"; }
+              { id = "SystemMonitor"; }
+              { id = "ActiveWindow"; }
+              { id = "MediaMini"; }
             ];
             center = [
-              {
-                id = "Workspace";
-              }
+              { id = "Workspace"; }
             ];
             right = [
-              {
-                id = "Tray";
-              }
-              {
-                id = "NotificationHistory";
-              }
-              {
-                id = "Battery";
-              }
-              {
-                id = "Volume";
-              }
-              {
-                id = "Brightness";
-              }
-              {
-                id = "ControlCenter";
-              }
+              { id = "Tray"; }
+              { id = "NotificationHistory"; }
+              { id = "Battery"; }
+              { id = "Volume"; }
+              { id = "Brightness"; }
+              { id = "ControlCenter"; }
             ];
           };
           mouseWheelAction = "none";
@@ -128,30 +104,6 @@
           lockScreenMonitors = [ ];
           lockScreenBlur = 0;
           lockScreenTint = 0;
-          keybinds = {
-            keyUp = [
-              "Up"
-            ];
-            keyDown = [
-              "Down"
-            ];
-            keyLeft = [
-              "Left"
-            ];
-            keyRight = [
-              "Right"
-            ];
-            keyEnter = [
-              "Return"
-              "Enter"
-            ];
-            keyEscape = [
-              "Esc"
-            ];
-            keyRemove = [
-              "Del"
-            ];
-          };
           reverseScroll = false;
         };
         ui = {
@@ -181,90 +133,48 @@
         };
         calendar = {
           cards = [
-            {
-              enabled = true;
-              id = "calendar-header-card";
-            }
-            {
-              enabled = true;
-              id = "calendar-month-card";
-            }
-            {
-              enabled = true;
-              id = "weather-card";
-            }
+            { enabled = true;  id = "calendar-header-card"; }
+            { enabled = true;  id = "calendar-month-card"; }
+            { enabled = true;  id = "weather-card"; }
           ];
         };
         wallpaper = {
           enabled = true;
           overviewEnabled = false;
           directory = "/home/g4ng/wallpapers";
-          monitorDirectories = [ ];
-          enableMultiMonitorDirectories = false;
-          showHiddenFiles = false;
           viewMode = "single";
           setWallpaperOnAllMonitors = true;
           fillMode = "crop";
-          fillColor = "#000000";
           useSolidColor = false;
           solidColor = "#1a1a2e";
           automationEnabled = false;
           wallpaperChangeMode = "random";
           randomIntervalSec = 300;
           transitionDuration = 1500;
-          transitionType = [
-            "fade"
-            "disc"
-            "stripes"
-            "wipe"
-            "pixelate"
-            "honeycomb"
-          ];
-          skipStartupTransition = false;
+          transitionType = [ "fade" "disc" "stripes" "wipe" "pixelate" "honeycomb" ];
           transitionEdgeSmoothness = 0.05;
           panelPosition = "follow_bar";
-          hideWallpaperFilenames = false;
           overviewBlur = 0.4;
           overviewTint = 0.6;
           useWallhaven = false;
-          wallhavenQuery = "";
-          wallhavenSorting = "relevance";
-          wallhavenOrder = "desc";
-          wallhavenCategories = "111";
-          wallhavenPurity = "100";
-          wallhavenRatios = "";
-          wallhavenApiKey = "";
-          wallhavenResolutionMode = "atleast";
-          wallhavenResolutionWidth = "";
-          wallhavenResolutionHeight = "";
           sortOrder = "name";
           favorites = [ ];
         };
         appLauncher = {
           enableClipboardHistory = false;
-          autoPasteClipboard = false;
           enableClipPreview = true;
-          clipboardWrapText = true;
-          enableClipboardSmartIcons = true;
-          enableClipboardChips = true;
           clipboardWatchTextCommand = "wl-paste --type text --watch cliphist store";
           clipboardWatchImageCommand = "wl-paste --type image --watch cliphist store";
           position = "center";
           pinnedApps = [ ];
           sortByMostUsed = true;
           terminalCommand = "ghostty -e";
-          customLaunchPrefixEnabled = false;
-          customLaunchPrefix = "";
           viewMode = "grid";
           showCategories = true;
           iconMode = "system";
-          showIconBackground = false;
           enableSettingsSearch = true;
           enableWindowsSearch = true;
           enableSessionSearch = true;
-          ignoreMouseInput = false;
-          screenshotAnnotationTool = "";
-          overviewLayer = false;
           density = "default";
         };
         controlCenter = {
@@ -272,82 +182,29 @@
           diskPath = "/";
           shortcuts = {
             left = [
-              {
-                id = "Network";
-              }
-              {
-                id = "Bluetooth";
-              }
-              {
-                id = "WallpaperSelector";
-              }
-              {
-                id = "NoctaliaPerformance";
-              }
+              { id = "Network"; }
+              { id = "Bluetooth"; }
+              { id = "WallpaperSelector"; }
+              { id = "NoctaliaPerformance"; }
             ];
             right = [
-              {
-                id = "Notifications";
-              }
-              {
-                id = "PowerProfile";
-              }
-              {
-                id = "KeepAwake";
-              }
-              {
-                id = "NightLight";
-              }
+              { id = "Notifications"; }
+              { id = "PowerProfile"; }
+              { id = "KeepAwake"; }
+              { id = "NightLight"; }
             ];
           };
           cards = [
-            {
-              enabled = true;
-              id = "profile-card";
-            }
-            {
-              enabled = true;
-              id = "shortcuts-card";
-            }
-            {
-              enabled = true;
-              id = "audio-card";
-            }
-            {
-              enabled = false;
-              id = "brightness-card";
-            }
-            {
-              enabled = true;
-              id = "weather-card";
-            }
-            {
-              enabled = true;
-              id = "media-sysmon-card";
-            }
+            { enabled = true;  id = "profile-card"; }
+            { enabled = true;  id = "shortcuts-card"; }
+            { enabled = true;  id = "audio-card"; }
+            { enabled = false; id = "brightness-card"; }
+            { enabled = true;  id = "weather-card"; }
+            { enabled = true;  id = "media-sysmon-card"; }
           ];
         };
         systemMonitor = {
-          cpuWarningThreshold = 80;
-          cpuCriticalThreshold = 90;
-          tempWarningThreshold = 80;
-          tempCriticalThreshold = 90;
-          gpuWarningThreshold = 80;
-          gpuCriticalThreshold = 90;
-          memWarningThreshold = 80;
-          memCriticalThreshold = 90;
-          swapWarningThreshold = 80;
-          swapCriticalThreshold = 90;
-          diskWarningThreshold = 80;
-          diskCriticalThreshold = 90;
-          diskAvailWarningThreshold = 20;
-          diskAvailCriticalThreshold = 10;
-          batteryWarningThreshold = 20;
-          batteryCriticalThreshold = 5;
           enableDgpuMonitoring = false;
-          useCustomColors = false;
-          warningColor = "";
-          criticalColor = "";
           externalMonitor = "resources || missioncenter || jdsystemmonitor || corestats || system-monitoring-center || gnome-system-monitor || plasma-systemmonitor || mate-system-monitor || ukui-system-monitor || deepin-system-monitor || pantheon-system-monitor";
         };
         noctaliaPerformance = {
@@ -405,69 +262,25 @@
           largeButtonsStyle = true;
           largeButtonsLayout = "single-row";
           powerOptions = [
-            {
-              action = "lock";
-              enabled = true;
-              keybind = "1";
-            }
-            {
-              action = "suspend";
-              enabled = true;
-              keybind = "2";
-            }
-            {
-              action = "hibernate";
-              enabled = true;
-              keybind = "3";
-            }
-            {
-              action = "reboot";
-              enabled = true;
-              keybind = "4";
-            }
-            {
-              action = "logout";
-              enabled = true;
-              keybind = "5";
-            }
-            {
-              action = "shutdown";
-              enabled = true;
-              keybind = "6";
-            }
-            {
-              action = "rebootToUefi";
-              enabled = true;
-              keybind = "7";
-            }
+            { action = "lock";         enabled = true; keybind = "1"; }
+            { action = "suspend";      enabled = true; keybind = "2"; }
+            { action = "hibernate";    enabled = true; keybind = "3"; }
+            { action = "reboot";       enabled = true; keybind = "4"; }
+            { action = "logout";       enabled = true; keybind = "5"; }
+            { action = "shutdown";     enabled = true; keybind = "6"; }
+            { action = "rebootToUefi"; enabled = true; keybind = "7"; }
           ];
         };
         notifications = {
           enabled = true;
-          enableMarkdown = false;
-          density = "default";
-          monitors = [ ];
           location = "top_right";
           overlayLayer = true;
-          respectExpireTimeout = false;
           lowUrgencyDuration = 3;
           normalUrgencyDuration = 8;
           criticalUrgencyDuration = 15;
           clearDismissed = true;
-          saveToHistory = {
-            low = true;
-            normal = true;
-            critical = true;
-          };
-          sounds = {
-            enabled = false;
-            volume = 0.5;
-            separateSounds = false;
-            criticalSoundFile = "";
-            normalSoundFile = "";
-            lowSoundFile = "";
-            excludedApps = "discord,firefox,chrome,chromium,edge";
-          };
+          saveToHistory = { low = true; normal = true; critical = true; };
+          sounds.enabled = false;
           enableMediaToast = false;
           enableKeyboardLayoutToast = true;
           enableBatteryToast = true;
@@ -477,26 +290,14 @@
           location = "top_right";
           autoHideMs = 2000;
           overlayLayer = true;
-          enabledTypes = [
-            0
-            1
-            2
-          ];
+          enabledTypes = [ 0 1 2 ];
           monitors = [ ];
         };
         audio = {
-          volumeStep = 5;
           volumeOverdrive = false;
-          spectrumFrameRate = 30;
           visualizerType = "linear";
-          mprisBlacklist = [ ];
-          preferredPlayer = "";
-          volumeFeedback = false;
-          volumeFeedbackSoundFile = "";
         };
         brightness = {
-          brightnessStep = 5;
-          enforceMinimum = true;
           enableDdcSupport = false;
           backlightDeviceMappings = [ ];
         };
@@ -505,60 +306,17 @@
           predefinedScheme = "Noctalia (default)";
           darkMode = true;
           schedulingMode = "off";
-          manualSunrise = "06:30";
-          manualSunset = "18:30";
           generationMethod = "tonal-spot";
-          monitorForColors = "";
-        };
-        templates = {
-          activeTemplates = [ ];
-          enableUserTheming = false;
         };
         nightLight = {
           enabled = false;
-          forced = false;
           autoSchedule = true;
           nightTemp = "4000";
           dayTemp = "6500";
-          manualSunrise = "06:30";
-          manualSunset = "18:30";
-        };
-        hooks = {
-          enabled = false;
-          wallpaperChange = "";
-          darkModeChange = "";
-          screenLock = "";
-          screenUnlock = "";
-          performanceModeEnabled = "";
-          performanceModeDisabled = "";
-          startup = "";
-          session = "";
-          colorGeneration = "";
         };
         plugins = {
           autoUpdate = false;
           notifyUpdates = true;
-        };
-        idle = {
-          enabled = false;
-          screenOffTimeout = 600;
-          lockTimeout = 660;
-          suspendTimeout = 1800;
-          fadeDuration = 5;
-          screenOffCommand = "";
-          lockCommand = "";
-          suspendCommand = "";
-          resumeScreenOffCommand = "";
-          resumeLockCommand = "";
-          resumeSuspendCommand = "";
-          customCommands = "[]";
-        };
-        desktopWidgets = {
-          enabled = false;
-          overviewEnabled = true;
-          gridSnap = false;
-          gridSnapScale = false;
-          monitorWidgets = [ ];
         };
       };
     };

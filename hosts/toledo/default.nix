@@ -22,34 +22,61 @@
 
   sops.defaultSopsFile = ../../secrets/toledo.yaml;
   sops.age.keyFile     = "/etc/age/keys.txt";
-  sops.secrets.wifi_psk = {};
+
+  sops.secrets.wifi_psk  = {};
+  sops.secrets.wifi_ssid = {};
+  sops.secrets.static_ip = {};
+  sops.secrets.gateway   = {};
+  sops.secrets.dns       = {};
+  sops.secrets.git_email = {};
+
   sops.templates.wifi-env = {
-    content = "WIFI_PSK=${config.sops.placeholder.wifi_psk}";
-    path    = "/run/secrets/wifi-env";
+    content = ''
+      WIFI_PSK=${config.sops.placeholder.wifi_psk}
+      WIFI_SSID=${config.sops.placeholder.wifi_ssid}
+      STATIC_IP=${config.sops.placeholder.static_ip}
+      GATEWAY=${config.sops.placeholder.gateway}
+      DNS=${config.sops.placeholder.dns}
+    '';
+    path = "/run/secrets/wifi-env";
   };
+
+  sops.templates.gitconfig = {
+    content = ''
+      [user]
+        email = ${config.sops.placeholder.git_email}
+    '';
+    path  = "/run/secrets/gitconfig";
+    owner = "g4ng";
+    mode  = "0400";
+  };
+
+  systemd.tmpfiles.rules = [
+    "z /etc/age/keys.txt 0600 root root -"
+  ];
 
   networking.hostName              = "toledo";
   networking.networkmanager.enable = true;
   networking.networkmanager.ensureProfiles = {
     environmentFiles = [ config.sops.templates.wifi-env.path ];
-    profiles."DIGIFIBRA-PLUS-DbXz" = {
+    profiles."home-wifi" = {
       connection = {
-        id   = "DIGIFIBRA-PLUS-DbXz";
+        id   = "$WIFI_SSID";
         type = "wifi";
       };
       wifi = {
         mode = "infrastructure";
-        ssid = "DIGIFIBRA-PLUS-DbXz";
+        ssid = "$WIFI_SSID";
       };
       wifi-security = {
         auth-alg = "open";
-        key-mgmt  = "wpa-psk";
-        psk       = "$WIFI_PSK";
+        key-mgmt = "wpa-psk";
+        psk      = "$WIFI_PSK";
       };
       ipv4 = {
         method   = "manual";
-        address1 = "192.168.1.120/24,192.168.1.1";
-        dns      = "192.168.1.104";
+        address1 = "$STATIC_IP,$GATEWAY";
+        dns      = "$DNS";
       };
       ipv6 = {
         method        = "auto";
@@ -125,7 +152,7 @@
     devices = {
       proxmox = {
         id                = "ZDR47VZ-J2FNFSV-7XX6KQY-6EJDS6C-GA6XS4G-VBJH6XD-D4U27LT-X7CXRQX";
-        autoAcceptFolders = true;
+        autoAcceptFolders = false;
       };
     };
     folders = {
@@ -137,10 +164,14 @@
     };
   };
 
+  # Sunshine game streaming
+  networking.firewall.allowedTCPPorts = [ 47984 47989 48010 ];
+  networking.firewall.allowedUDPPorts = [ 47998 47999 48000 48002 ];
+
   powerManagement.cpuFreqGovernor = "schedutil";
 
   home-manager = {
-    useGlobalPkgs       = false;
+    useGlobalPkgs       = true;
     useUserPackages     = false;
     backupFileExtension = "backup";
     users.g4ng.imports  = [ ../../users/g4ng/dots.nix ];

@@ -92,6 +92,7 @@
           pkgs.sops
           pkgs.age
         ];
+        env.SOPS_AGE_KEY_FILE = "/etc/age/keys.txt";
       };
     };
 }

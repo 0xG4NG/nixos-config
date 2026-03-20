@@ -83,7 +83,7 @@ in
       enable      = true;
       user        = cfg.user;
       dataDir     = cfg.dataDir;
-      openDefaultPorts  = true;
+      openDefaultPorts  = cfg.role == "server";
       overrideDevices   = cfg.overrideDevices;
       overrideFolders   = cfg.overrideFolders;
 
