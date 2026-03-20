@@ -12,11 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,7 +38,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, disko, agenix, noctalia, stylix, zen-browser, nvf, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, disko, noctalia, stylix, zen-browser, nvf, ... }:
     let
       lib    = nixpkgs.lib;
       system = "x86_64-linux";
@@ -56,7 +51,6 @@
           modules = [
             disko.nixosModules.disko
             stylix.nixosModules.stylix
-            agenix.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               home-manager.sharedModules = [
@@ -89,7 +83,6 @@
           pkgs.nh
           pkgs.deadnix
           pkgs.nixfmt-rfc-style
-          agenix.packages.${system}.default
         ];
       };
     };

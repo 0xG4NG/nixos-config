@@ -1,4 +1,4 @@
-{ pkgs, inputs,lib, ... }:
+{ pkgs, inputs, lib, ... }:
 
 {
   imports = [
@@ -92,12 +92,12 @@
     dataDir = "/home/g4ng";
     devices = {
       proxmox = {
-        id = "XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX";
+        id = "ZDR47VZ-J2FNFSV-7XX6KQY-6EJDS6C-GA6XS4G-VBJH6XD-D4U27LT-X7CXRQX";
       };
     };
     folders = {
-      obsidian-vault = {
-        path    = "/home/g4ng/Documents/Obsidian";
+      "uzyxu-holdf" = {
+        path    = "/home/g4ng/Documents/";
         devices = [ "proxmox" ];
         type    = "sendreceive";
       };
