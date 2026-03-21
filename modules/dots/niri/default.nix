@@ -19,7 +19,6 @@ in
     }
 
     input {
-        focus-follows-mouse
     }
 
     prefer-no-csd
@@ -68,7 +67,6 @@ in
     binds {
         Mod+Return { spawn "ghostty"; }
         Mod+E { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
-        Mod+A { spawn "firefox"; }
         Mod+X { spawn "foot" "-a" "launcher" "-e" "fsel" "-d"; }
         Mod+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-select"; }
         Mod+Shift+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-delete"; }
