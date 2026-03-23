@@ -13,9 +13,17 @@ in
     }
 
     output "DP-2" {
-        mode "3840x2160@143.999"
-        scale 1.5
+        mode "3840x2160@144"
+        scale 2
         variable-refresh-rate
+        position x=0 y=0
+    }
+
+    output "DP-1" {
+        mode "3840x2160@144"
+        scale 2
+        variable-refresh-rate
+        position x=1920 y=0
     }
 
     input {
@@ -34,7 +42,7 @@ in
             proportion 0.4
             proportion 0.6
         }
-        default-column-width { proportion 0.6; }
+        default-column-width { proportion 1.0; }
         focus-ring {
             off
         }
@@ -73,12 +81,12 @@ in
         Mod+Escape repeat=false { toggle-overview; }
         Mod+Q repeat=false { close-window; }
         Mod+Left { focus-column-left; }
-        Mod+Down { focus-window-down; }
-        Mod+Up { focus-window-up; }
+        Mod+Down { focus-workspace-down; }
+        Mod+Up { focus-workspace-up; }
         Mod+Right { focus-column-right; }
         Mod+Shift+Left { move-column-left; }
-        Mod+Shift+Down { move-window-down; }
-        Mod+Shift+Up { move-window-up; }
+        Mod+Shift+Down { move-column-to-workspace-down; }
+        Mod+Shift+Up { move-column-to-workspace-up; }
         Mod+Shift+Right { move-column-right; }
         Mod+Ctrl+Left { focus-monitor-left; }
         Mod+Ctrl+Right { focus-monitor-right; }
@@ -93,7 +101,7 @@ in
         Mod+7 { focus-workspace 7; }
         Mod+8 { focus-workspace 8; }
         Mod+9 { focus-workspace 9; }
-        Mod+Shift+1 { move-column-to-workspace 1; }
+        Mod+Shift+1 { move-column-to-workspace 1; }     
         Mod+Shift+2 { move-column-to-workspace 2; }
         Mod+Shift+3 { move-column-to-workspace 3; }
         Mod+Shift+4 { move-column-to-workspace 4; }

@@ -11,7 +11,7 @@
         bbenoist.nix
       ];
       userSettings = {
-        "window.zoomLevel" = 1.5;
+        "window.zoomLevel" = 1;
         "editor.mouseWheelZoom" = true;
 
         "workbench.iconTheme" = "material-icon-theme";
@@ -20,6 +20,8 @@
 
         # Claude extension
         "claudeCode.preferredLocation" = "panel";
+        "chat.agent.enabled" = true;
+        "chat.modeToggle.enabled" = true;
       };
     };
   };
