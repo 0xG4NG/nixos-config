@@ -80,6 +80,10 @@ in
         Mod+Shift+Down { move-window-down; }
         Mod+Shift+Up { move-window-up; }
         Mod+Shift+Right { move-column-right; }
+        Mod+Ctrl+Left { focus-monitor-left; }
+        Mod+Ctrl+Right { focus-monitor-right; }
+        Mod+Ctrl+Shift+Left { move-column-to-monitor-left; }
+        Mod+Ctrl+Shift+Right { move-column-to-monitor-right; }
         Mod+1 { focus-workspace 1; }
         Mod+2 { focus-workspace 2; }
         Mod+3 { focus-workspace 3; }

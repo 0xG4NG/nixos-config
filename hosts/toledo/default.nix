@@ -23,23 +23,7 @@
   sops.defaultSopsFile = ../../secrets/toledo.yaml;
   sops.age.keyFile     = "/etc/age/keys.txt";
 
-  sops.secrets.wifi_psk  = {};
-  sops.secrets.wifi_ssid = {};
-  sops.secrets.static_ip = {};
-  sops.secrets.gateway   = {};
-  sops.secrets.dns       = {};
   sops.secrets.git_email = {};
-
-  sops.templates.wifi-env = {
-    content = ''
-      WIFI_PSK=${config.sops.placeholder.wifi_psk}
-      WIFI_SSID=${config.sops.placeholder.wifi_ssid}
-      STATIC_IP=${config.sops.placeholder.static_ip}
-      GATEWAY=${config.sops.placeholder.gateway}
-      DNS=${config.sops.placeholder.dns}
-    '';
-    path = "/run/secrets/wifi-env";
-  };
 
   sops.templates.gitconfig = {
     content = ''
@@ -55,35 +39,16 @@
     "z /etc/age/keys.txt 0600 root root -"
   ];
 
-  networking.hostName              = "toledo";
-  networking.networkmanager.enable = true;
-  networking.networkmanager.ensureProfiles = {
-    environmentFiles = [ config.sops.templates.wifi-env.path ];
-    profiles."home-wifi" = {
-      connection = {
-        id   = "$WIFI_SSID";
-        type = "wifi";
-      };
-      wifi = {
-        mode = "infrastructure";
-        ssid = "$WIFI_SSID";
-      };
-      wifi-security = {
-        auth-alg = "open";
-        key-mgmt = "wpa-psk";
-        psk      = "$WIFI_PSK";
-      };
-      ipv4 = {
-        method   = "manual";
-        address1 = "$STATIC_IP,$GATEWAY";
-        dns      = "$DNS";
-      };
-      ipv6 = {
-        method        = "auto";
-        addr-gen-mode = "stable-privacy";
-      };
-    };
+  networking.hostName = "toledo";
+  networking.interfaces.enp13s0 = {
+    useDHCP = false;
+    ipv4.addresses = [{
+      address      = "192.168.1.120";
+      prefixLength = 24;
+    }];
   };
+  networking.defaultGateway = "192.168.1.1";
+  networking.nameservers    = [ "192.168.1.104" ];
 
   console.keyMap        = "us-acentos";
   i18n.defaultLocale    = "es_ES.UTF-8";
