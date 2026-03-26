@@ -77,6 +77,8 @@
     vesktop
     unzip
     ilspycmd
+    bottles
+    distrobox
   ];
 
   security.rtkit.enable = true;
@@ -116,6 +118,8 @@
   };
 
   programs.steam.platformOptimizations.enable = true;
+
+  virtualisation.podman.enable = true;
 
   misc.syncthing = {
     enable  = true;

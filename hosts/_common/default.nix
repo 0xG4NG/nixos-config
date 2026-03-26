@@ -27,5 +27,6 @@
     ripgrep
     jq
     fastfetch
+    tree
   ];
 }
