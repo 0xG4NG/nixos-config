@@ -17,11 +17,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nvf = {
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,7 +33,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, disko, stylix, zen-browser, nvf, sops-nix, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, disko, stylix, nvf, sops-nix, ... }:
     let
       lib    = nixpkgs.lib;
       system = "x86_64-linux";
@@ -57,10 +52,9 @@
             inputs.nix-gaming.nixosModules.pipewireLowLatency
             {
               home-manager.sharedModules = [
-                zen-browser.homeModules.default
                 nvf.homeManagerModules.default
               ];
-              home-manager.extraSpecialArgs = { inherit inputs zen-browser; };
+              home-manager.extraSpecialArgs = { inherit inputs; };
             }
             ./hosts/_common
             ./hosts/${host}

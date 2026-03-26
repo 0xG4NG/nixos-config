@@ -1,7 +1,19 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   c = config.lib.stylix.colors.withHashtag;
+
+  powermenu = pkgs.writeShellScript "powermenu" ''
+    options="  Apagar\n  Reiniciar\n  Suspender\n  Hibernar\n󰍃  Cerrar sesión"
+    chosen=$(printf "$options" | ${pkgs.rofi}/bin/rofi -dmenu -p "Sesión" -i)
+    case "$chosen" in
+      *"Apagar"*)        systemctl poweroff ;;
+      *"Reiniciar"*)     systemctl reboot ;;
+      *"Suspender"*)     systemctl suspend ;;
+      *"Hibernar"*)      systemctl hibernate ;;
+      *"Cerrar sesión"*) niri msg action quit ;;
+    esac
+  '';
 in
 {
   xdg.configFile."niri/config.kdl".text = ''
@@ -127,6 +139,7 @@ in
         Mod+S { screenshot-screen show-pointer=false; }
         Mod+Shift+S { screenshot show-pointer=false; }
         Mod+Shift+Q { quit; }
+        Mod+P repeat=false { spawn "${powermenu}"; }
 
         XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
         XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }

@@ -9,7 +9,7 @@
     ../../modules/dots/waybar
     ../../modules/dots/rofi
     ../../modules/dots/fastfetch
-    ../../modules/dots/zen-browser
+    ../../modules/dots/firefox
     ../../modules/dots/nvf
     ../../modules/dots/vscode
   ];

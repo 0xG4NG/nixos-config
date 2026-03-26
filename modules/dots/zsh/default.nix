@@ -7,11 +7,51 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
+    shellAliases = {
+      # Rebuild
+      nrs  = "sudo nixos-rebuild switch --flake ~/nixos-config#toledo";
+      nrt  = "sudo nixos-rebuild test   --flake ~/nixos-config#toledo";
+      nrb  = "sudo nixos-rebuild boot   --flake ~/nixos-config#toledo";
+
+      # Flake
+      nfu  = "cd ~/nixos-config && nix flake update";
+      nfc  = "cd ~/nixos-config && nix flake check";
+
+      # Búsqueda e inspección
+      nse  = "nix search nixpkgs";
+      nsh  = "nix shell nixpkgs#";
+      ndev = "nix develop";
+      nrpl = "nix repl '<nixpkgs>'";
+
+      # Limpieza
+      ngc  = "sudo nix-collect-garbage -d";
+      ngco = "nix-collect-garbage";
+
+      # Info generación actual
+      ngen = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
+    };
+
     initContent = ''
       # Autocompletado case-insensitive
       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'm:{A-Z}={a-z}'
       zstyle ':completion:*' menu select
       autoload -Uz compinit && compinit
+
+      # Commit con IA: genera mensaje con claude y abre editor para confirmar
+      gcai() {
+        if ! git diff --cached --quiet; then
+          local msg
+          msg=$(git diff --cached | claude --print "Genera un mensaje de commit conciso en inglés para este diff. Devuelve solo el mensaje, sin explicaciones ni formato extra." 2>/dev/null)
+          if [[ -n "$msg" ]]; then
+            git commit -e -m "$msg"
+          else
+            echo "No se pudo generar el mensaje. Abriendo editor vacío."
+            git commit
+          fi
+        else
+          echo "No hay cambios en staging. Usa 'git add' primero."
+        fi
+      }
     '';
   };
 
