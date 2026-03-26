@@ -1,7 +1,7 @@
 # nixos-config
 
 Configuración de NixOS gestionada con flakes. Actualmente gestiona un único host de escritorio (`toledo`), con estructura preparada para expandirse a un homelab.
-
+ 
 ## Hardware
 
 | Componente | Modelo |
