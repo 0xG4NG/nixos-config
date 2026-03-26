@@ -13,6 +13,11 @@
 
   programs.zsh.enable = true;
 
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
   environment.systemPackages = with pkgs; [
     wget
     git
