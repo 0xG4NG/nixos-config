@@ -43,7 +43,7 @@
           local msg
           msg=$(git diff --cached | claude --print "Genera un mensaje de commit conciso en inglés para este diff. Devuelve solo el mensaje, sin explicaciones ni formato extra." 2>/dev/null)
           if [[ -n "$msg" ]]; then
-            git commit -e -m "$msg"
+            GIT_EDITOR=nvim git commit -e -m "$msg"
           else
             echo "No se pudo generar el mensaje. Abriendo editor vacío."
             git commit
