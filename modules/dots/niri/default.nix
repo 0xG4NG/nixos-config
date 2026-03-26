@@ -14,35 +14,41 @@ in
 
     output "DP-2" {
         mode "3840x2160@144"
-        scale 2
-        variable-refresh-rate
+        scale 1.5
         position x=0 y=0
     }
 
     output "DP-1" {
-        mode "3840x2160@144"
-        scale 2
-        variable-refresh-rate
-        position x=1920 y=0
+        mode "3840x2160@143.999"
+        scale 1.5
+        position x=2560 y=0
     }
 
     input {
+        keyboard {
+            xkb {
+                layout "us"
+                variant "altgr-intl"
+            }
+        }
     }
 
     prefer-no-csd
     screenshot-path "~/screenshots/Screenshot-%Y-%m-%d-%H-%M-%S.png"
-    spawn-sh-at-startup "swaybg -i ${config.stylix.image}"
+    spawn-sh-at-startup "swaybg -i ${./wallpapers/wallhaven-839g92.png}"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
-    spawn-at-startup "noctalia-shell"
+    spawn-at-startup "waybar"
+    spawn-at-startup "mako"
 
     layout {
         gaps 16
         always-center-single-column
         preset-column-widths {
-            proportion 0.4
-            proportion 0.6
+            proportion 0.5
+            proportion 0.6667
+            proportion 1.0
         }
-        default-column-width { proportion 1.0; }
+        default-column-width { proportion 0.5; }
         focus-ring {
             off
         }
@@ -74,7 +80,7 @@ in
 
     binds {
         Mod+Return { spawn "ghostty"; }
-        Mod+E { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
+        Mod+E { spawn "rofi" "-show" "drun"; }
         Mod+X { spawn "foot" "-a" "launcher" "-e" "fsel" "-d"; }
         Mod+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-select"; }
         Mod+Shift+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-delete"; }
@@ -110,6 +116,10 @@ in
         Mod+Shift+7 { move-column-to-workspace 7; }
         Mod+Shift+8 { move-column-to-workspace 8; }
         Mod+Shift+9 { move-column-to-workspace 9; }
+        Mod+Minus { set-column-width "-10%"; }
+        Mod+Equal { set-column-width "+10%"; }
+        Mod+Ctrl+Up   repeat=true { set-window-height "-10%"; }
+        Mod+Ctrl+Down repeat=true { set-window-height "+10%"; }
         Mod+T { fullscreen-window; }
         Mod+Shift+T { expand-column-to-available-width; }
         Mod+F { toggle-window-floating; }
@@ -117,6 +127,10 @@ in
         Mod+S { screenshot-screen show-pointer=false; }
         Mod+Shift+S { screenshot show-pointer=false; }
         Mod+Shift+Q { quit; }
+
+        XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+        XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+        XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute"   "@DEFAULT_AUDIO_SINK@" "toggle"; }
     }
 
     hotkey-overlay {

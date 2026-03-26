@@ -12,16 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.noctalia-qs.follows = "noctalia-qs";
-    };
-    noctalia-qs = {
-      url = "github:noctalia-dev/noctalia-qs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,9 +31,14 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, disko, noctalia, stylix, zen-browser, nvf, sops-nix, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, disko, stylix, zen-browser, nvf, sops-nix, ... }:
     let
       lib    = nixpkgs.lib;
       system = "x86_64-linux";
@@ -58,9 +53,10 @@
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
+            inputs.nix-gaming.nixosModules.platformOptimizations
+            inputs.nix-gaming.nixosModules.pipewireLowLatency
             {
               home-manager.sharedModules = [
-                noctalia.homeModules.default
                 zen-browser.homeModules.default
                 nvf.homeManagerModules.default
               ];

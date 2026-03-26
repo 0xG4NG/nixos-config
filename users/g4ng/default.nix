@@ -7,7 +7,7 @@
     users.g4ng = {
       uid          = 1000;
       isNormalUser = true;
-      shell        = pkgs.bash;
+      shell        = pkgs.zsh;
       extraGroups  = [ "wheel" "networkmanager" "video" "render" "input" ];
       group        = "g4ng";
     };

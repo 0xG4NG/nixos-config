@@ -60,6 +60,7 @@
   hardware.i2c.enable = true;
 
   environment.systemPackages = with pkgs; [
+    inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.mo2installer
     ddcutil
     claude-code
     btop-rocm
@@ -67,14 +68,15 @@
     papirus-icon-theme
     xwayland-satellite
     mako
-    fuzzel
     kdePackages.polkit-kde-agent-1
-    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     sunshine
     ffmpeg
     orca-slicer
     bitwarden-desktop
     obsidian
+    vesktop
+    unzip
+    ilspycmd
   ];
 
   security.rtkit.enable = true;
@@ -84,6 +86,7 @@
     alsa.support32Bit = true;
     pulse.enable      = true;
     jack.enable       = true;
+    lowLatency.enable = true;
   };
 
   programs.steam.enable   = true;
@@ -106,6 +109,13 @@
     curl
     glib
   ];
+
+  nix.settings = {
+    substituters = ["https://nix-gaming.cachix.org"];
+    trusted-public-keys = ["nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="];
+  };
+
+  programs.steam.platformOptimizations.enable = true;
 
   misc.syncthing = {
     enable  = true;

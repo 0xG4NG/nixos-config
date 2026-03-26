@@ -10,8 +10,7 @@
       window-padding-balance = true;
       window-padding-x = 15;
       font-size = 16;
-      adjust-cell-height = "50%";
-      font-thicken = true;
+font-thicken = true;
       font-thicken-strength = 120;
       keybind = [
         "global:cmd+shift+space=toggle_quick_terminal"

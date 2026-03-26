@@ -3,9 +3,11 @@
 {
   imports = [
     ./git.nix
+    ../../modules/dots/zsh
     ../../modules/dots/ghostty
     ../../modules/dots/niri
-    ../../modules/dots/noctalia
+    ../../modules/dots/waybar
+    ../../modules/dots/rofi
     ../../modules/dots/fastfetch
     ../../modules/dots/zen-browser
     ../../modules/dots/nvf
