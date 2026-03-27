@@ -1,8 +1,22 @@
 keys:
-  - &toledo age10prc9j3uu03exr554w8pyh6dmt0v5vpuxkd3z209tymryx76tgqqhn554v
+  - &toledo   age10prc9j3uu03exr554w8pyh6dmt0v5vpuxkd3z209tymryx76tgqqhn554v
+  - &servidor age1PLACEHOLDER # reemplaza con: ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub
+  - &laptop   age1PLACEHOLDER # reemplaza con: ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub
 
 creation_rules:
   - path_regex: secrets/toledo\.yaml$
     key_groups:
       - age:
           - *toledo
+
+  - path_regex: secrets/servidor\.yaml$
+    key_groups:
+      - age:
+          - *toledo
+          - *servidor
+
+  - path_regex: secrets/laptop\.yaml$
+    key_groups:
+      - age:
+          - *toledo
+          - *laptop

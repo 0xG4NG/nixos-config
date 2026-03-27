@@ -31,9 +31,14 @@
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, disko, stylix, nvf, sops-nix, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, disko, stylix, nvf, sops-nix, nur, ... }:
     let
       lib    = nixpkgs.lib;
       system = "x86_64-linux";
@@ -81,6 +86,8 @@
           pkgs.nixfmt-rfc-style
           pkgs.sops
           pkgs.age
+          pkgs.nixos-anywhere
+          pkgs.ssh-to-age
         ];
         env.SOPS_AGE_KEY_FILE = "/etc/age/keys.txt";
       };

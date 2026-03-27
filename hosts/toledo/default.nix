@@ -154,7 +154,10 @@
     useGlobalPkgs       = true;
     useUserPackages     = false;
     backupFileExtension = "backup";
-    users.g4ng.imports  = [ ../../users/g4ng/dots.nix ];
+    users.g4ng.imports  = [
+      ../../users/g4ng/dots/common.nix
+      ../../users/g4ng/dots/desktop.nix
+    ];
   };
   
   system.stateVersion = "25.11";

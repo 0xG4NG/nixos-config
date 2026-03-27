@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
+  nixpkgs.overlays = [ inputs.nur.overlays.default ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   nix.gc = {

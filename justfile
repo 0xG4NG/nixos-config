@@ -12,10 +12,16 @@ switch:
 dry-run:
     nh os build . --dry-run
 
-# Aplicar en un host remoto (requiere SSH)
-deploy host:
+# Despliegue inicial en una máquina nueva (formatea disco e instala desde cero)
+# Uso: just install servidor root@192.168.1.x
+install host target:
+    nixos-anywhere --flake .#{{host}} {{target}}
+
+# Aplicar configuración en un host remoto ya instalado (requiere SSH)
+# Uso: just deploy servidor g4ng@192.168.1.x
+deploy host target=host:
     nixos-rebuild switch --flake .#{{host}} \
-        --target-host {{host}} \
+        --target-host {{target}} \
         --use-remote-sudo
 
 # Formatear código Nix (requiere: nix develop)
