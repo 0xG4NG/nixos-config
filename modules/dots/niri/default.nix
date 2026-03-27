@@ -60,7 +60,7 @@ in
             proportion 0.6667
             proportion 1.0
         }
-        default-column-width { proportion 0.5; }
+        default-column-width { proportion 1.0; }
         focus-ring {
             off
         }

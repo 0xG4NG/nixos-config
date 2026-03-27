@@ -79,6 +79,7 @@
     ilspycmd
     bottles
     distrobox
+    obs-studio
   ];
 
   security.rtkit.enable = true;
