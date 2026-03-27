@@ -26,6 +26,11 @@
     };
     polarity = "dark";
 
+    opacity = {
+      terminal     = 0.92; # ghostty: se multiplica con el 0.9 de niri → ~0.83
+      applications = 1.0;  # resto de apps: solo aplica el 0.9 de niri
+    };
+
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;

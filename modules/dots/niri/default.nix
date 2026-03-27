@@ -47,7 +47,7 @@ in
 
     prefer-no-csd
     screenshot-path "~/screenshots/Screenshot-%Y-%m-%d-%H-%M-%S.png"
-    spawn-sh-at-startup "swaybg -i ${./wallpapers/wallhaven-839g92.png}"
+    spawn-at-startup "${pkgs.swaybg}/bin/swaybg" "-i" "${./wallpapers/wallhaven-839g92.png}"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
     spawn-at-startup "waybar"
     spawn-at-startup "mako"
@@ -65,10 +65,7 @@ in
             off
         }
         border {
-            width 2
-            active-color "${c.base0E}"
-            inactive-color "${c.base03}"
-            urgent-color "${c.base08}"
+            off
         }
     }
 
@@ -79,6 +76,82 @@ in
     window-rule {
         geometry-corner-radius 5
         clip-to-geometry true
+        opacity 0.9
+    }
+
+    animations {
+        // Cambio de workspace: spring físico, se siente fluido
+        workspace-switch {
+            spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+        }
+
+        // Apertura: disuelve desde transparente
+        window-open {
+            duration-ms 250
+            curve "ease-out-expo"
+            custom-shader r"
+                void open_color(
+                    inout vec4 color,
+                    inout vec4 next_color,
+                    float clamped_progress,
+                    float unclamped_progress,
+                    vec2 coords,
+                    vec2 size_in_physical_pixels,
+                    float scale_factor
+                ) {
+                    color.a *= clamped_progress;
+                    color.rgb *= clamped_progress;
+                }
+            "
+        }
+
+        // Cierre: disuelve hacia transparente
+        window-close {
+            duration-ms 180
+            curve "ease-out-quad"
+            custom-shader r"
+                void close_color(
+                    inout vec4 color,
+                    inout vec4 next_color,
+                    float clamped_progress,
+                    float unclamped_progress,
+                    vec2 coords,
+                    vec2 size_in_physical_pixels,
+                    float scale_factor
+                ) {
+                    float alpha = 1.0 - clamped_progress;
+                    color.a *= alpha;
+                    color.rgb *= alpha;
+                }
+            "
+        }
+
+        // Movimientos de cámara y ventanas: spring para sensación natural
+        horizontal-view-movement {
+            spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+        }
+        window-movement {
+            spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+        }
+        window-resize {
+            spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+        }
+
+        // Overview: spring suave
+        overview-open-close {
+            spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+        }
+
+        // Screenshot UI
+        screenshot-ui-open {
+            duration-ms 200
+            curve "ease-out-quad"
+        }
+
+        // Notificación de error de config: rebota un poco (damping < 1)
+        config-notification-open-close {
+            spring damping-ratio=0.6 stiffness=1000 epsilon=0.001
+        }
     }
 
     window-rule {
