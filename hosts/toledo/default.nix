@@ -16,7 +16,23 @@
   boot.loader.efi.canTouchEfiVariables        = true;
   boot.initrd.kernelModules                   = [ "amdgpu" ];
 
-  services.displayManager.sddm.enable  = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = false;
+    theme = "where_is_my_sddm_theme";
+    extraPackages = [
+      (pkgs.where-is-my-sddm-theme.override {
+        themeConfig.General = {
+          background        = "${config.stylix.image}";
+          blurRadius        = "20";
+          basicTextColor    = "#fffef9";
+          passwordCursorColor = "#be9db9";
+          font              = "JetBrainsMono Nerd Font Mono";
+          passwordFontSize  = "72";
+        };
+      })
+    ];
+  };
   services.xserver.enable              = true;
   services.xserver.videoDrivers        = [ "amdgpu" ];
 
@@ -40,6 +56,7 @@
   ];
 
   networking.hostName = "toledo";
+  networking.useDHCP = false;
   networking.interfaces.enp13s0 = {
     useDHCP = false;
     ipv4.addresses = [{
@@ -71,7 +88,15 @@
     kdePackages.polkit-kde-agent-1
     sunshine
     ffmpeg
-    orca-slicer
+    (pkgs.symlinkJoin {
+      name = "orca-slicer";
+      paths = [ pkgs.orca-slicer ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/orca-slicer \
+          --set MESA_LOADER_DRIVER_OVERRIDE zink
+      '';
+    })
     bitwarden-desktop
     obsidian
     vesktop
@@ -80,6 +105,11 @@
     bottles
     distrobox
     obs-studio
+    heroic
+    xfce.thunar
+    xfce.thunar-volman
+    xfce.tumbler
+    gvfs
   ];
 
   security.rtkit.enable = true;
@@ -121,6 +151,13 @@
   programs.steam.platformOptimizations.enable = true;
 
   virtualisation.podman.enable = true;
+
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu.swtpm.enable = true;  # TPM virtual (útil para Windows 11)
+  };
+  programs.virt-manager.enable = true;
+  users.users.g4ng.extraGroups = [ "libvirtd" ];
 
   misc.syncthing = {
     enable  = true;

@@ -1,7 +1,7 @@
 { config, ... }:
 let
   c = config.lib.stylix.colors.withHashtag;
-  font = config.stylix.fonts.monospace.name;
+  font = config.stylix.fonts.sansSerif.name;
 in
 {
   programs.waybar = {
@@ -88,7 +88,7 @@ in
 
     style = ''
       * {
-        font-family: "${font}";
+        font-family: "${font}", sans-serif;
         font-size: 13px;
         border: none;
         border-radius: 0;

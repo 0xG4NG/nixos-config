@@ -11,6 +11,9 @@
       "uBlock0@raymondhill.net" = { # uBlock Origin
         installation_mode = "force_installed";
       };
+      "surfingkeys_ff@brookhong.github.com" = { # Surfingkeys
+        installation_mode = "force_installed";
+      };
     };
 
     profiles.default = {
@@ -19,6 +22,7 @@
       extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
         bitwarden
         ublock-origin
+        surfingkeys
       ];
 
       settings = {

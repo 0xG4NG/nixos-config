@@ -47,7 +47,6 @@ in
 
     prefer-no-csd
     screenshot-path "~/screenshots/Screenshot-%Y-%m-%d-%H-%M-%S.png"
-    spawn-at-startup "${pkgs.swaybg}/bin/swaybg" "-i" "${./wallpapers/wallhaven-839g92.png}"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
     spawn-at-startup "waybar"
     spawn-at-startup "mako"
@@ -65,7 +64,8 @@ in
             off
         }
         border {
-            off
+            width 2
+            active-color "#ffffff"
         }
     }
 
@@ -74,9 +74,9 @@ in
     }
 
     window-rule {
-        geometry-corner-radius 5
+        geometry-corner-radius 0
         clip-to-geometry true
-        opacity 0.9
+        opacity 1.0
     }
 
     animations {

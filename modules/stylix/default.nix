@@ -27,22 +27,22 @@
     polarity = "dark";
 
     opacity = {
-      terminal     = 0.92; # ghostty: se multiplica con el 0.9 de niri → ~0.83
-      applications = 1.0;  # resto de apps: solo aplica el 0.9 de niri
+      terminal     = 1.0;
+      applications = 1.0;
     };
 
     fonts = {
       monospace = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrainsMono Nerd Font Mono";
+        package = pkgs.nerd-fonts.iosevka-term;
+        name = "IosevkaTerm Nerd Font Mono";
       };
       sansSerif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Sans";
+        package = pkgs.nerd-fonts.iosevka;
+        name = "Iosevka Nerd Font";
       };
       serif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Serif";
+        package = pkgs.nerd-fonts.iosevka;
+        name = "Iosevka Nerd Font";
       };
       sizes = {
         terminal = 16;
