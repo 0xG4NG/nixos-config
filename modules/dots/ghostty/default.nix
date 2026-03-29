@@ -9,6 +9,7 @@
       window-theme = "system";
       window-padding-balance = true;
       window-padding-x = 15;
+      working-directory = "/home/g4ng/nixos-config";
       font-size = 16;
 font-thicken = true;
       font-thicken-strength = 120;

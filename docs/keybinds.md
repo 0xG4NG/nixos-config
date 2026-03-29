@@ -2,6 +2,7 @@
 
 ## Niri (Window Manager)
 
+
 `Mod` = Super/Windows key
 
 ### Aplicaciones

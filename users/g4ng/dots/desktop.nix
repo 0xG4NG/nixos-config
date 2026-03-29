@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -9,4 +9,9 @@
     ../../../modules/dots/firefox
     ../../../modules/dots/vscode
   ];
+
+  gtk.iconTheme = {
+    package = pkgs.papirus-icon-theme;
+    name    = "Papirus-Dark";
+  };
 }

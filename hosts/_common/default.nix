@@ -30,5 +30,7 @@
     jq
     fastfetch
     tree
+    cmatrix
+    cava
   ];
 }

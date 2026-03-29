@@ -6,6 +6,8 @@
     ../../../modules/dots/zsh
     ../../../modules/dots/nvf
     ../../../modules/dots/fastfetch
+    ../../../modules/dots/cava
+    ../../../modules/dots/cmatrix
   ];
 
   home.username      = "g4ng";

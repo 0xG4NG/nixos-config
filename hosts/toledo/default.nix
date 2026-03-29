@@ -8,6 +8,7 @@
     ../../modules/davinci-resolve
     ../../modules/stylix
     ../../modules/misc/syncthing
+    ../../modules/sddm
   ];
 
   boot.loader.systemd-boot.enable             = true;
@@ -16,23 +17,6 @@
   boot.loader.efi.canTouchEfiVariables        = true;
   boot.initrd.kernelModules                   = [ "amdgpu" ];
 
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = false;
-    theme = "where_is_my_sddm_theme";
-    extraPackages = [
-      (pkgs.where-is-my-sddm-theme.override {
-        themeConfig.General = {
-          background        = "${config.stylix.image}";
-          blurRadius        = "20";
-          basicTextColor    = "#fffef9";
-          passwordCursorColor = "#be9db9";
-          font              = "JetBrainsMono Nerd Font Mono";
-          passwordFontSize  = "72";
-        };
-      })
-    ];
-  };
   services.xserver.enable              = true;
   services.xserver.videoDrivers        = [ "amdgpu" ];
 

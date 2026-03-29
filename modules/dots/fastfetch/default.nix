@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
+let
+  c = config.lib.stylix.colors.withHashtag;
+in
 {
   home.packages = [ pkgs.fastfetch ];
 
@@ -10,13 +13,12 @@
       type = "builtin";
       source = "nixos";
       color = {
-        "1" = "#c1c1c1";
-        "2" = "#fbcb97";
-        "3" = "#c1c1c1";
-        "4" = "#fbcb97";
-        "5" = "#c1c1c1";
-        "6" = "#fbcb97";
-
+        "1" = c.base0E;
+        "2" = c.base0D;
+        "3" = c.base0B;
+        "4" = c.base0A;
+        "5" = c.base09;
+        "6" = c.base08;
       };
     };
 
