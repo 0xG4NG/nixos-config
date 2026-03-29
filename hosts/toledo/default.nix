@@ -114,6 +114,13 @@
   programs.firefox.enable = true;
   programs.niri.enable    = true;
 
+  # Tor: servicio de red + Tor Browser
+  services.tor = {
+    enable = true;
+    client.enable = true;  # SOCKS5 proxy en 127.0.0.1:9050
+  };
+  programs.tor-browser.enable = true;
+
   services.flatpak.enable = true;
   xdg.portal = {
     enable       = true;

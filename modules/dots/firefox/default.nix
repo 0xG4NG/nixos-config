@@ -3,19 +3,6 @@
 {
   programs.firefox = {
     enable = true;
-
-    policies.ExtensionSettings = {
-      "{d634138d-c276-4fc8-924b-40a0ea21d284}" = { # Bitwarden
-        installation_mode = "force_installed";
-      };
-      "uBlock0@raymondhill.net" = { # uBlock Origin
-        installation_mode = "force_installed";
-      };
-      "surfingkeys_ff@brookhong.github.com" = { # Surfingkeys
-        installation_mode = "force_installed";
-      };
-    };
-
     profiles.default = {
       isDefault = true;
 
