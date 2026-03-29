@@ -60,6 +60,10 @@
 
   hardware.i2c.enable = true;
 
+  hardware.bluetooth.enable      = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable        = true;
+
   environment.systemPackages = with pkgs; [
     inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.mo2installer
     ddcutil
@@ -110,6 +114,7 @@
   programs.firefox.enable = true;
   programs.niri.enable    = true;
 
+  services.flatpak.enable = true;
   xdg.portal = {
     enable       = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
