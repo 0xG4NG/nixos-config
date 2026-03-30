@@ -10,7 +10,7 @@ switch:
 
 # Preview de cambios sin aplicar
 dry-run:
-    nh os build . --dry-run
+    nh os build . --dry
 
 # Despliegue inicial en una máquina nueva (formatea disco e instala desde cero)
 # Uso: just install servidor root@192.168.1.x

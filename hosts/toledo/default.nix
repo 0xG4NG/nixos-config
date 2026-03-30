@@ -9,6 +9,7 @@
     ../../modules/theming/stylix
     ../../modules/services/syncthing
     ../../modules/programs/desktop/sddm
+    ../../modules/programs/desktop/bitwarden
   ];
 
   boot.loader.systemd-boot.enable             = true;
@@ -69,7 +70,6 @@
     ddcutil
     claude-code
     btop-rocm
-    bitwarden-cli
     papirus-icon-theme
     xwayland-satellite
     mako
@@ -85,7 +85,6 @@
           --set MESA_LOADER_DRIVER_OVERRIDE zink
       '';
     })
-    bitwarden-desktop
     obsidian
     vesktop
     unzip

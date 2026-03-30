@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ ... }:
 
 {
   imports = [
@@ -11,7 +11,19 @@
   boot.loader.systemd-boot.enable      = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "servidor";
+  # --- Red ---
+  # Ajusta la interfaz con: ip link (ej: enp3s0, eno1, eth0...)
+  networking.hostName    = "servidor";
+  networking.useDHCP     = false;
+  networking.interfaces."enp6s0" = {
+    useDHCP = false;
+    ipv4.addresses = [{
+      address      = "192.168.1.100";
+      prefixLength = 24;
+    }];
+  };
+  networking.defaultGateway = "192.168.1.1";
+  networking.nameservers    = [ "192.168.1.104" "8.8.8.8" ];
 
   # --- SSH ---
   services.openssh = {
@@ -28,9 +40,10 @@
     allowedTCPPorts = [ 22 ];
   };
 
-  # --- Secrets ---
+  # --- Secretos ---
   sops.defaultSopsFile = ../../secrets/servidor.yaml;
   sops.age.keyFile     = "/etc/age/keys.txt";
+
 
   # --- Home Manager (solo herramientas de terminal) ---
   home-manager = {

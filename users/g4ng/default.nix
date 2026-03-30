@@ -1,7 +1,12 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   nix.settings.trusted-users = [ "g4ng" ];
+
+  sops.secrets.g4ng_password = {
+    neededForUsers = true;
+    sopsFile       = ./../../secrets/common.yaml;
+  };
 
   users = {
     users.g4ng = {
@@ -9,14 +14,15 @@
       isNormalUser = true;
       shell        = pkgs.zsh;
       extraGroups  = [ "wheel" "networkmanager" "video" "render" "input" ];
-      group        = "g4ng";
+      group               = "g4ng";
+      hashedPasswordFile  = config.sops.secrets.g4ng_password.path;
       openssh.authorizedKeys.keys = [
-        # Pega aquí tu clave pública: cat ~/.ssh/id_ed25519.pub
-        # "ssh-ed25519 AAAA... g4ng@toledo"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH+ktRXEN5IJwRBS+kA6K6T/FSHcO1pcXlz2TRaQQtCN"
       ];
     };
     groups.g4ng = {
       gid = 1000;
     };
+    users.root.hashedPassword = "!";
   };
 }
