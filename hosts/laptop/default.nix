@@ -4,7 +4,7 @@
   imports = [
     ./disk.nix
     ../../users/g4ng
-    ../../modules/stylix
+    ../../modules/theming/stylix
   ];
 
   # --- Boot ---
@@ -25,12 +25,12 @@
 
   # El Omen 15 tiene gráficos híbridos Intel+NVIDIA (Optimus).
   # Rellena los bus IDs con: lspci | grep -E "VGA|3D"
-  hardware.nvidia.prime = {
-    offload.enable           = true;
-    offload.enableOffloadCmd = true;
-    # intelBusId  = "PCI:0:2:0";
-    # nvidiaBusId = "PCI:1:0:0";
-  };
+  # hardware.nvidia.prime = {
+  #   offload.enable           = true;
+  #   offload.enableOffloadCmd = true;
+  #   intelBusId  = "PCI:0:2:0";  # lspci | grep -E "VGA|3D"
+  #   nvidiaBusId = "PCI:1:0:0";
+  # };
 
   hardware.graphics.enable = true;
 

@@ -83,7 +83,7 @@
           pkgs.just
           pkgs.nh
           pkgs.deadnix
-          pkgs.nixfmt-rfc-style
+          pkgs.nixfmt
           pkgs.sops
           pkgs.age
           pkgs.nixos-anywhere

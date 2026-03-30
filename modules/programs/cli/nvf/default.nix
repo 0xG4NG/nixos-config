@@ -15,8 +15,9 @@
       clipboard.registers = "unnamedplus";
       lineNumberMode = "number";
 
+      lsp.enable = true;
+
       languages = {
-        enableLSP = true;
         enableFormat = true;
         enableTreesitter = true;
 

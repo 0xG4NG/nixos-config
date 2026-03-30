@@ -4,6 +4,7 @@
   imports = [
     ./disk.nix
     ../../users/g4ng
+    ../../modules/theming/stylix
   ];
 
   # --- Boot ---

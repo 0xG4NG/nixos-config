@@ -5,10 +5,10 @@
     ./hardware-configuration.nix
     ./disk.nix
     ../../users/g4ng
-    ../../modules/davinci-resolve
-    ../../modules/stylix
-    ../../modules/misc/syncthing
-    ../../modules/sddm
+    ../../modules/programs/media/davinci-resolve
+    ../../modules/theming/stylix
+    ../../modules/services/syncthing
+    ../../modules/programs/desktop/sddm
   ];
 
   boot.loader.systemd-boot.enable             = true;
@@ -49,7 +49,7 @@
     }];
   };
   networking.defaultGateway = "192.168.1.1";
-  networking.nameservers    = [ "192.168.1.104" ];
+  networking.nameservers    = [ "192.168.1.104" "8.8.8.8" ];
 
   console.keyMap        = "us-acentos";
   i18n.defaultLocale    = "es_ES.UTF-8";
