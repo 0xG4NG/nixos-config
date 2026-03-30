@@ -98,6 +98,7 @@
     xfce.thunar-volman
     xfce.tumbler
     gvfs
+    tor-browser
   ];
 
   security.rtkit.enable = true;
@@ -119,7 +120,6 @@
     enable = true;
     client.enable = true;  # SOCKS5 proxy en 127.0.0.1:9050
   };
-  programs.tor-browser.enable = true;
 
   services.flatpak.enable = true;
   xdg.portal = {

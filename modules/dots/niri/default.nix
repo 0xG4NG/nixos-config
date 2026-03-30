@@ -20,6 +20,7 @@ in
     environment {
         MOZ_ENABLE_WAYLAND "1"
         MOZ_DBUS_REMOTE "1"
+        MOZ_GTK_TITLEBAR_DECORATION "client"
         LANG "C.UTF-8"
         NO_AT_BRIDGE "1"
     }
