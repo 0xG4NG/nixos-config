@@ -1,6 +1,14 @@
 { pkgs, inputs, ... }:
 
 {
+  imports = [
+    ../../modules/system/audio
+    ../../modules/system/boot
+    ../../modules/system/bluetooth
+    ../../modules/system/desktop-base
+    ../../modules/system/locale-es
+  ];
+
   nixpkgs.overlays = [ inputs.nur.overlays.default ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

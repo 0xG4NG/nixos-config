@@ -4,12 +4,18 @@
   imports = [
     ./disk.nix
     ../../users/g4ng
+    # nvf (neovim) está configurado con theme.name = "base16", así que necesita
+    # los colores base16 que provee stylix aunque el servidor sea headless.
     ../../modules/theming/stylix
   ];
 
-  # --- Boot ---
-  boot.loader.systemd-boot.enable      = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # --- Módulos compartidos ---
+  # El servidor es headless: sin audio, sin bluetooth, sin desktop-base.
+  misc.locale-es.enable = true;
+  misc.boot-systemd = {
+    enable  = true;
+    timeout = 3;
+  };
 
   # --- Red ---
   # Ajusta la interfaz con: ip link (ej: enp3s0, eno1, eth0...)
@@ -41,7 +47,10 @@
   };
 
   # --- Secretos ---
-  sops.defaultSopsFile = ../../secrets/servidor.yaml;
+  # De momento solo necesitamos el hashedPassword de common.yaml.
+  # Cuando haya secretos específicos del servidor se añade secrets/servidor.yaml
+  # y se vuelve a cambiar a defaultSopsFile = ../../secrets/servidor.yaml.
+  sops.defaultSopsFile = ../../secrets/common.yaml;
   sops.age.keyFile     = "/etc/age/keys.txt";
 
 
@@ -52,10 +61,6 @@
     backupFileExtension  = "backup";
     users.g4ng.imports   = [ ../../users/g4ng/dots/common.nix ];
   };
-
-  # --- Locale ---
-  time.timeZone      = "Europe/Madrid";
-  i18n.defaultLocale = "es_ES.UTF-8";
 
   system.stateVersion = "25.11";
 }

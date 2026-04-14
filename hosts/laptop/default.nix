@@ -1,4 +1,4 @@
-{ pkgs, inputs, config, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -7,11 +7,16 @@
     ../../modules/theming/stylix
   ];
 
-  # --- Boot ---
-  boot.loader.systemd-boot.enable             = true;
-  boot.loader.systemd-boot.configurationLimit = 10;
-  boot.loader.timeout                         = 15;
-  boot.loader.efi.canTouchEfiVariables        = true;
+  # --- Módulos compartidos ---
+  misc.audio.enable        = true;
+  misc.bluetooth.enable    = true;
+  misc.desktop-base.enable = true;
+  misc.locale-es.enable    = true;
+  misc.boot-systemd = {
+    enable             = true;
+    configurationLimit = 10;
+    timeout            = 15;
+  };
 
   # --- NVIDIA ---
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -43,62 +48,21 @@
   networking.networkmanager.enable = true;
 
   # --- Secrets ---
-  sops.defaultSopsFile = ../../secrets/laptop.yaml;
+  # Por ahora el laptop solo usa secrets/common.yaml (hashedPassword del usuario).
+  # Cuando tenga su propia clave age en .sops.yaml se puede añadir secrets/laptop.yaml
+  # con git_email y recrear la plantilla de gitconfig como en toledo.
+  sops.defaultSopsFile = ../../secrets/common.yaml;
   sops.age.keyFile     = "/etc/age/keys.txt";
-
-  sops.secrets.git_email = {};
-
-  sops.templates.gitconfig = {
-    content = ''
-      [user]
-        email = ${config.sops.placeholder.git_email}
-    '';
-    path  = "/run/secrets/gitconfig";
-    owner = "g4ng";
-    mode  = "0400";
-  };
 
   systemd.tmpfiles.rules = [
     "z /etc/age/keys.txt 0600 root root -"
   ];
 
-  # --- Locale ---
-  console.keyMap        = "us-acentos";
-  i18n.defaultLocale    = "es_ES.UTF-8";
-  i18n.supportedLocales = [
-    "en_US.UTF-8/UTF-8"
-    "es_ES.UTF-8/UTF-8"
-  ];
-
-  # --- Audio ---
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable            = true;
-    alsa.enable       = true;
-    alsa.support32Bit = true;
-    pulse.enable      = true;
-    jack.enable       = true;
-    lowLatency.enable = true;
-  };
-
-  # --- Bluetooth ---
-  hardware.bluetooth.enable      = true;
-  hardware.bluetooth.powerOnBoot = true;
-  services.blueman.enable        = true;
-
   # --- Batería ---
   services.power-profiles-daemon.enable = true;
 
-  # --- Portales y escritorio ---
+  # --- Escritorio ---
   programs.niri.enable = true;
-
-  xdg.portal = {
-    enable       = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
-
-  services.gnome.gnome-keyring.enable           = true;
-  security.pam.services.sddm.enableGnomeKeyring = true;
 
   # --- Paquetes ---
   environment.systemPackages = with pkgs; [
