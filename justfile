@@ -38,10 +38,11 @@ clean:
 diff:
     nh os build . && nvd diff /run/current-system result
 
-# Crear un nuevo secreto con agenix
-# Uso: just secret nombre-del-secreto
+# Editar (o crear) un secreto cifrado con sops
+# Uso: just secret toledo     -> edita secrets/toledo.yaml
+#      just secret common
 secret name:
-    cd secrets && agenix -e {{name}}.age
+    sops secrets/{{name}}.yaml
 
 # Actualizar todos los inputs del flake
 update:

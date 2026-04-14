@@ -9,6 +9,7 @@
   };
 
   users = {
+    mutableUsers = false;
     users.g4ng = {
       uid          = 1000;
       isNormalUser = true;

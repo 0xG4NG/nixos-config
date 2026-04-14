@@ -25,14 +25,14 @@ in
         NO_AT_BRIDGE "1"
     }
 
-    output "DP-2" {
-        mode "3840x2160@144"
+    output "DP-1" {
+        mode "3840x2160@143.999"
         scale 1.5
         position x=0 y=0
     }
 
-    output "DP-1" {
-        mode "3840x2160@143.999"
+    output "DP-2" {
+        mode "3840x2160@144"
         scale 1.5
         position x=2560 y=0
     }
@@ -50,7 +50,7 @@ in
     screenshot-path "~/screenshots/Screenshot-%Y-%m-%d-%H-%M-%S.png"
     spawn-at-startup "${pkgs.swaybg}/bin/swaybg" "-i" "${./wallpapers/996764.jpg}"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
-    spawn-at-startup "waybar"
+    spawn-at-startup "noctalia-shell"
     spawn-at-startup "mako"
 
     layout {
@@ -166,25 +166,41 @@ in
     }
 
     binds {
+        // --- Lanzadores (capa base del TBK Mini) ---
         Mod+Return { spawn "ghostty"; }
         Mod+E { spawn "rofi" "-show" "drun"; }
         Mod+X { spawn "foot" "-a" "launcher" "-e" "fsel" "-d"; }
         Mod+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-select"; }
         Mod+Shift+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-delete"; }
+        Mod+P repeat=false { spawn "${powermenu}"; }
+
+        // --- Ventana / sesión ---
         Mod+Escape repeat=false { toggle-overview; }
         Mod+Q repeat=false { close-window; }
-        Mod+Left { focus-column-left; }
-        Mod+Down { focus-workspace-down; }
-        Mod+Up { focus-workspace-up; }
-        Mod+Right { focus-column-right; }
-        Mod+Shift+Left { move-column-left; }
-        Mod+Shift+Down { move-column-to-workspace-down; }
-        Mod+Shift+Up { move-column-to-workspace-up; }
-        Mod+Shift+Right { move-column-right; }
-        Mod+Ctrl+Left { focus-monitor-left; }
-        Mod+Ctrl+Right { focus-monitor-right; }
-        Mod+Ctrl+Shift+Left { move-column-to-monitor-left; }
-        Mod+Ctrl+Shift+Right { move-column-to-monitor-right; }
+        Mod+Shift+Q { quit; }
+        Mod+T { fullscreen-window; }
+        Mod+Shift+T { expand-column-to-available-width; }
+        Mod+F { toggle-window-floating; }
+        Mod+R { switch-preset-column-width; }
+        Mod+S { screenshot-screen show-pointer=false; }
+        Mod+Shift+S { screenshot show-pointer=false; }
+
+        // --- Navegación (J=izq, K=arriba, L=abajo, ;=der) ---
+        // J/; = columnas, K/L = workspaces
+        Mod+J { focus-column-left; }
+        Mod+Semicolon { focus-column-right; }
+        Mod+L { focus-workspace-down; }
+        Mod+K { focus-workspace-up; }
+        Mod+Shift+J { move-column-left; }
+        Mod+Shift+Semicolon { move-column-right; }
+        Mod+Shift+L { move-column-to-workspace-down; }
+        Mod+Shift+K { move-column-to-workspace-up; }
+        Mod+Ctrl+J { focus-monitor-left; }
+        Mod+Ctrl+Semicolon { focus-monitor-right; }
+        Mod+Ctrl+Shift+J { move-column-to-monitor-left; }
+        Mod+Ctrl+Shift+Semicolon { move-column-to-monitor-right; }
+
+        // --- Acceso directo a workspace (números en L1: MO(1) + fila superior) ---
         Mod+1 { focus-workspace 1; }
         Mod+2 { focus-workspace 2; }
         Mod+3 { focus-workspace 3; }
@@ -194,7 +210,7 @@ in
         Mod+7 { focus-workspace 7; }
         Mod+8 { focus-workspace 8; }
         Mod+9 { focus-workspace 9; }
-        Mod+Shift+1 { move-column-to-workspace 1; }     
+        Mod+Shift+1 { move-column-to-workspace 1; }
         Mod+Shift+2 { move-column-to-workspace 2; }
         Mod+Shift+3 { move-column-to-workspace 3; }
         Mod+Shift+4 { move-column-to-workspace 4; }
@@ -203,19 +219,19 @@ in
         Mod+Shift+7 { move-column-to-workspace 7; }
         Mod+Shift+8 { move-column-to-workspace 8; }
         Mod+Shift+9 { move-column-to-workspace 9; }
+
+        // --- Redimensionado (Minus/Equal en L2 del TBK: poco frecuente, aceptable) ---
         Mod+Minus { set-column-width "-10%"; }
         Mod+Equal { set-column-width "+10%"; }
-        Mod+Ctrl+Up   repeat=true { set-window-height "-10%"; }
-        Mod+Ctrl+Down repeat=true { set-window-height "+10%"; }
-        Mod+T { fullscreen-window; }
-        Mod+Shift+T { expand-column-to-available-width; }
-        Mod+F { toggle-window-floating; }
-        Mod+R { switch-preset-column-width; }
-        Mod+S { screenshot-screen show-pointer=false; }
-        Mod+Shift+S { screenshot show-pointer=false; }
-        Mod+Shift+Q { quit; }
-        Mod+P repeat=false { spawn "${powermenu}"; }
+        Mod+Ctrl+Minus repeat=true { set-window-height "-10%"; }
+        Mod+Ctrl+Equal repeat=true { set-window-height "+10%"; }
 
+        // --- Audio (Comma/Period/M están en capa base — ergonómico) ---
+        Mod+Comma  allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+        Mod+Period allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+        Mod+M      allow-when-locked=true { spawn "wpctl" "set-mute"   "@DEFAULT_AUDIO_SINK@" "toggle"; }
+
+        // Fallback para teclados externos con teclas multimedia dedicadas
         XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
         XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
         XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute"   "@DEFAULT_AUDIO_SINK@" "toggle"; }

@@ -54,10 +54,10 @@
         { mode = "n"; key = "<leader>sv"; action = "<cmd>vsplit<CR>"; desc = "Split vertical"; }
         { mode = "n"; key = "<leader>sh"; action = "<cmd>split<CR>"; desc = "Split horizontal"; }
         { mode = "n"; key = "<leader>sx"; action = "<cmd>close<CR>"; desc = "Cerrar split"; }
-        { mode = "n"; key = "<C-h>"; action = "<C-w>h"; desc = "Ir a split izquierdo"; }
-        { mode = "n"; key = "<C-j>"; action = "<C-w>j"; desc = "Ir a split abajo"; }
+        { mode = "n"; key = "<C-j>"; action = "<C-w>h"; desc = "Ir a split izquierdo"; }
         { mode = "n"; key = "<C-k>"; action = "<C-w>k"; desc = "Ir a split arriba"; }
-        { mode = "n"; key = "<C-l>"; action = "<C-w>l"; desc = "Ir a split derecho"; }
+        { mode = "n"; key = "<C-l>"; action = "<C-w>j"; desc = "Ir a split abajo"; }
+        { mode = "n"; key = "<C-;>"; action = "<C-w>l"; desc = "Ir a split derecho"; }
 
         # -- LSP --
         { mode = "n"; key = "gd"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; desc = "Ir a definicion"; }
