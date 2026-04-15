@@ -11,7 +11,6 @@
     ../../modules/programs/desktop/sddm
     ../../modules/programs/desktop/bitwarden
     ../../modules/programs/keyboard/qmk
-    ../../modules/hardware/tbk-mini
   ];
 
   # --- Módulos del sistema compartidos ---

@@ -207,7 +207,7 @@ Sin keybindings personalizados. Usa los defaults de VSCode.
 ## TBK Mini (Teclado)
 
 Split 42 teclas (3x6 + 3 pulgares por lado). Layout físico y capas definidas
-en [modules/hardware/tbk-mini/tbk_mini.layout.json](../modules/hardware/tbk-mini/tbk_mini.layout.json).
+en el repo [tbk-mini-keymap](https://github.com/0xg4ng/tbk-mini-keymap) (`tbk_mini.layout.json`).
 
 ### Layer 0 — Base (QWERTY)
 

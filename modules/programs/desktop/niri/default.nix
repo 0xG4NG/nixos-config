@@ -169,6 +169,7 @@ in
         // --- Lanzadores (capa base del TBK Mini) ---
         Mod+Return { spawn "ghostty"; }
         Mod+E { spawn "rofi" "-show" "drun"; }
+        Mod+W { spawn "noctalia-shell" "msg" "launcher" "toggle"; }
         Mod+X { spawn "foot" "-a" "launcher" "-e" "fsel" "-d"; }
         Mod+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-select"; }
         Mod+Shift+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-delete"; }

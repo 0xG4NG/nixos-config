@@ -52,3 +52,44 @@ update:
 # Uso: just update-input nixpkgs
 update-input input:
     nix flake update {{input}}
+
+# ───────────────── TBK Mini ──────────────────
+# Solo compila el firmware del TBK Mini sin flashear.
+# Útil tras editar modules/hardware/tbk-mini/keymap/*.
+tbk-build:
+    nix build --no-link --print-out-paths \
+      '.#nixosConfigurations.toledo.config.environment.systemPackages' \
+      > /dev/null
+    tbk-mini-flash | awk '/Firmware:/ { print $2 }'
+
+# Flashea una mitad del TBK Mini.
+# 1. Pon la mitad en bootloader (combo QK_BOOT o doble-tap reset físico)
+# 2. Corre este comando; espera hasta 30s al volumen RPI-RP2, monta, copia y sync.
+# Uso: just tbk-flash    (repite para la otra mitad)
+tbk-flash:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    FW=$(tbk-mini-flash | awk '/Firmware:/ { print $2; exit }')
+    if [ ! -f "$FW" ]; then
+      echo "No encontré el firmware ($FW)" >&2
+      exit 1
+    fi
+    echo "Firmware: $FW"
+    echo "Esperando al volumen RPI-RP2 (pulsa reset o el combo QK_BOOT)…"
+    DEV=""
+    for _ in $(seq 1 60); do
+      DEV=$(lsblk -rno NAME,LABEL | awk '$2 == "RPI-RP2" { print "/dev/" $1; exit }')
+      [ -n "$DEV" ] && break
+      sleep 0.5
+    done
+    if [ -z "$DEV" ]; then
+      echo "No se detectó ninguna mitad en 30s. Aborto." >&2
+      exit 1
+    fi
+    echo "Detectado: $DEV"
+    sudo mkdir -p /mnt/rpi
+    sudo mount "$DEV" /mnt/rpi
+    sudo cp "$FW" /mnt/rpi/
+    sync
+    sudo umount /mnt/rpi 2>/dev/null || true
+    echo "OK — la mitad se reinicia sola. Si queda otra, repite: just tbk-flash"

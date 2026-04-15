@@ -41,6 +41,14 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Keymap QMK para TBK Mini — repo independiente para que otros puedan
+    # compilarlo sin clonar el nixos-config entero.
+    # Cambiar a "github:0xg4ng/tbk-mini-keymap" tras hacer push.
+    tbk-mini-keymap = {
+      url = "path:/home/g4ng/tbk-mini-keymap";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, disko, stylix, nvf, sops-nix, nur, ... }:
@@ -60,6 +68,7 @@
             sops-nix.nixosModules.sops
             inputs.nix-gaming.nixosModules.platformOptimizations
             inputs.nix-gaming.nixosModules.pipewireLowLatency
+            inputs.tbk-mini-keymap.nixosModules.default
             {
               home-manager.sharedModules = [
                 nvf.homeManagerModules.default
@@ -79,6 +88,8 @@
       ) hostDirs);
     in
     {
+      packages.${system}.firmware = inputs.tbk-mini-keymap.packages.${system}.firmware;
+
       nixosConfigurations = builtins.listToAttrs (map (host: {
         name  = host;
         value = mkHost { inherit host; };
