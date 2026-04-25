@@ -2,7 +2,6 @@
 .claude/
 
 # Secrets / credenciales
-*.age
 *.pem
 *.key
 *.env

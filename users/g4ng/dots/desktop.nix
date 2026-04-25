@@ -9,6 +9,7 @@
     ../../../modules/programs/desktop/cosmic
     ../../../modules/programs/browser/firefox
     ../../../modules/programs/desktop/vscode
+    ../../../modules/theming/qt
   ];
 
   gtk.iconTheme = {

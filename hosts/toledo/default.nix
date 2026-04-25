@@ -8,9 +8,10 @@
     ../../modules/programs/media/davinci-resolve
     ../../modules/theming/stylix
     ../../modules/services/syncthing
-    ../../modules/programs/desktop/sddm
+../../modules/programs/desktop/sddm
     ../../modules/programs/desktop/bitwarden
     ../../modules/programs/keyboard/qmk
+    ../../modules/programs/gaming
   ];
 
   # --- Módulos del sistema compartidos ---
@@ -26,8 +27,8 @@
 
   boot.initrd.kernelModules = [ "amdgpu" ];
 
-  services.xserver.enable              = true;
-  services.xserver.videoDrivers        = [ "amdgpu" ];
+  services.xserver.enable       = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   services.openssh = {
     enable        = true;
@@ -35,24 +36,21 @@
     settings.PasswordAuthentication = false;
   };
 
-  sops.defaultSopsFile = ../../secrets/toledo.yaml;
-  sops.age.keyFile     = "/etc/age/keys.txt"; # TODO fase 2: cambiar a sshKeyPaths tras el rebuild
-
-  sops.secrets.git_email = {};
-
-  sops.templates.gitconfig = {
-    content = ''
-      [user]
-        email = ${config.sops.placeholder.git_email}
-    '';
-    path  = "/run/secrets/gitconfig";
+  age.secrets.git_email = {
+    file  = ../../secrets/git_email.age;
     owner = "g4ng";
-    mode  = "0400";
   };
 
-  systemd.tmpfiles.rules = [
-    "z /etc/age/keys.txt 0600 root root -"
-  ];
+  system.activationScripts.gitconfig = {
+    text = ''
+      mkdir -p /run/secrets
+      printf '[user]\n  email = %s\n' "$(cat ${config.age.secrets.git_email.path})" \
+        > /run/secrets/gitconfig
+      chown g4ng:users /run/secrets/gitconfig
+      chmod 0400 /run/secrets/gitconfig
+    '';
+    deps = [ "agenix" ];
+  };
 
   networking.hostName = "toledo";
   networking.networkmanager.enable = true;
@@ -66,7 +64,6 @@
     btop-rocm
     papirus-icon-theme
     xwayland-satellite
-    mako
     kdePackages.polkit-kde-agent-1
     sunshine
     ffmpeg
@@ -101,9 +98,19 @@
     tor-browser
     darktable
     chromium
+    (pkgs.symlinkJoin {
+      name = "vial";
+      paths = [ pkgs.vial ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/Vial \
+          --set QT_SCALE_FACTOR 2
+      '';
+    })
   ];
 
-  programs.steam.enable   = true;
+  misc.gaming.enable = true;
+
   programs.firefox.enable = true;
   programs.niri.enable    = true;
 
@@ -140,8 +147,6 @@
     substituters = ["https://nix-gaming.cachix.org"];
     trusted-public-keys = ["nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="];
   };
-
-  programs.steam.platformOptimizations.enable = true;
 
   virtualisation.podman.enable = true;
 

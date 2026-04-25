@@ -11,6 +11,8 @@
 
   nixpkgs.overlays = [ inputs.nur.overlays.default ];
 
+  age.identityPaths = [ "/etc/age/keys.txt" ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   nix.gc = {

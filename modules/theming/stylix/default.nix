@@ -27,7 +27,7 @@
     polarity = "dark";
 
     opacity = {
-      terminal     = 0.9;
+      terminal     = 1.0;
       applications = 1.0;
     };
 

@@ -33,6 +33,17 @@
       git.neogit.enable = true;
 
       keymaps = [
+        # -- Navegación: jklñ en lugar de hjkl --
+        { mode = "n"; key = "j"; action = "h"; desc = "Mover izquierda"; noremap = true; }
+        { mode = "n"; key = "l"; action = "j"; desc = "Mover abajo";     noremap = true; }
+        { mode = "n"; key = "ñ"; action = "l"; desc = "Mover derecha";   noremap = true; }
+        { mode = "v"; key = "j"; action = "h"; desc = "Mover izquierda"; noremap = true; }
+        { mode = "v"; key = "l"; action = "j"; desc = "Mover abajo";     noremap = true; }
+        { mode = "v"; key = "ñ"; action = "l"; desc = "Mover derecha";   noremap = true; }
+        { mode = "o"; key = "j"; action = "h"; desc = "Mover izquierda"; noremap = true; }
+        { mode = "o"; key = "l"; action = "j"; desc = "Mover abajo";     noremap = true; }
+        { mode = "o"; key = "ñ"; action = "l"; desc = "Mover derecha";   noremap = true; }
+
         # -- Explorador de archivos --
         { mode = "n"; key = "<leader>e"; action = "<cmd>Neotree toggle<CR>"; desc = "Toggle explorador"; }
         { mode = "n"; key = "<leader>o"; action = "<cmd>Neotree focus<CR>"; desc = "Foco al explorador"; }
@@ -54,10 +65,10 @@
         { mode = "n"; key = "<leader>sv"; action = "<cmd>vsplit<CR>"; desc = "Split vertical"; }
         { mode = "n"; key = "<leader>sh"; action = "<cmd>split<CR>"; desc = "Split horizontal"; }
         { mode = "n"; key = "<leader>sx"; action = "<cmd>close<CR>"; desc = "Cerrar split"; }
-        { mode = "n"; key = "<C-j>"; action = "<C-w>h"; desc = "Ir a split izquierdo"; }
-        { mode = "n"; key = "<C-k>"; action = "<C-w>k"; desc = "Ir a split arriba"; }
-        { mode = "n"; key = "<C-l>"; action = "<C-w>j"; desc = "Ir a split abajo"; }
-        { mode = "n"; key = "<C-;>"; action = "<C-w>l"; desc = "Ir a split derecho"; }
+        { mode = "n"; key = "<C-j>"; action = "<C-w>h"; desc = "Ir a split izquierdo"; noremap = true; }
+        { mode = "n"; key = "<C-k>"; action = "<C-w>k"; desc = "Ir a split arriba";    noremap = true; }
+        { mode = "n"; key = "<C-l>"; action = "<C-w>j"; desc = "Ir a split abajo";     noremap = true; }
+        { mode = "n"; key = "<C-ñ>"; action = "<C-w>l"; desc = "Ir a split derecho";   noremap = true; }
 
         # -- LSP --
         { mode = "n"; key = "gd"; action = "<cmd>lua vim.lsp.buf.definition()<CR>"; desc = "Ir a definicion"; }

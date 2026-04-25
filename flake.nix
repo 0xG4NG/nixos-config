@@ -22,8 +22,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
+    agenix = {
+      url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -41,17 +41,9 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Keymap QMK para TBK Mini — repo independiente para que otros puedan
-    # compilarlo sin clonar el nixos-config entero.
-    # Cambiar a "github:0xg4ng/tbk-mini-keymap" tras hacer push.
-    tbk-mini-keymap = {
-      url = "path:/home/g4ng/tbk-mini-keymap";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, disko, stylix, nvf, sops-nix, nur, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, disko, stylix, nvf, agenix, nur, ... }:
     let
       lib    = nixpkgs.lib;
       system = "x86_64-linux";
@@ -65,10 +57,10 @@
             disko.nixosModules.disko
             stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
-            sops-nix.nixosModules.sops
+            agenix.nixosModules.default
             inputs.nix-gaming.nixosModules.platformOptimizations
             inputs.nix-gaming.nixosModules.pipewireLowLatency
-            inputs.tbk-mini-keymap.nixosModules.default
+            ./modules/hardware/keyboard/tbk-mini
             {
               home-manager.sharedModules = [
                 nvf.homeManagerModules.default
@@ -88,7 +80,10 @@
       ) hostDirs);
     in
     {
-      packages.${system}.firmware = inputs.tbk-mini-keymap.packages.${system}.firmware;
+      packages.${system}.firmware =
+        (import ./modules/hardware/keyboard/tbk-mini/nix/firmware.nix {
+          keymapSrc = ./modules/hardware/keyboard/tbk-mini/keymap;
+        }) { inherit pkgs; };
 
       nixosConfigurations = builtins.listToAttrs (map (host: {
         name  = host;
@@ -101,12 +96,10 @@
           pkgs.nh
           pkgs.deadnix
           pkgs.nixfmt
-          pkgs.sops
+          agenix.packages.${system}.default
           pkgs.age
           pkgs.nixos-anywhere
-          pkgs.ssh-to-age
         ];
-        env.SOPS_AGE_KEY_FILE = "/etc/age/keys.txt";
       };
     };
 }

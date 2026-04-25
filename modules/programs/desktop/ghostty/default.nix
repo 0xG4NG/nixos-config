@@ -6,7 +6,6 @@
     package = pkgs.ghostty;
     settings = {
       window-decoration = "none";
-      window-theme = "system";
       window-padding-balance = true;
       window-padding-x = 15;
       working-directory = "/home/g4ng/nixos-config";
@@ -20,6 +19,8 @@
         "ctrl+zero=reset_font_size"
         "ctrl+period=increase_font_size:1"
         "ctrl+comma=decrease_font_size:1"
+        "ctrl+c=copy_to_clipboard"
+        "ctrl+v=paste_from_clipboard"
       ];
     };
   };

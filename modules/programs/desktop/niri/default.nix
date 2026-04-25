@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, osConfig, ... }:
 
 let
   c = config.lib.stylix.colors.withHashtag;
@@ -40,8 +40,8 @@ in
     input {
         keyboard {
             xkb {
-                layout "us"
-                variant "altgr-intl"
+                layout "${osConfig.services.xserver.xkb.layout}"
+                variant "${osConfig.services.xserver.xkb.variant}"
             }
         }
     }
@@ -51,7 +51,6 @@ in
     spawn-at-startup "${pkgs.swaybg}/bin/swaybg" "-i" "${./wallpapers/996764.jpg}"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
     spawn-at-startup "noctalia-shell"
-    spawn-at-startup "mako"
 
     layout {
         gaps 16
@@ -65,14 +64,6 @@ in
         focus-ring {
             off
         }
-        border {
-            width 2
-            active-color "#ffffff"
-        }
-    }
-
-    overview {
-        backdrop-color "${c.base01}"
     }
 
     window-rule {
@@ -82,53 +73,12 @@ in
     }
 
     animations {
-        // Cambio de workspace: spring físico, se siente fluido
         workspace-switch {
             spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
         }
 
-        // Apertura: disuelve desde transparente
-        window-open {
-            duration-ms 250
-            curve "ease-out-expo"
-            custom-shader r"
-                void open_color(
-                    inout vec4 color,
-                    inout vec4 next_color,
-                    float clamped_progress,
-                    float unclamped_progress,
-                    vec2 coords,
-                    vec2 size_in_physical_pixels,
-                    float scale_factor
-                ) {
-                    color.a *= clamped_progress;
-                    color.rgb *= clamped_progress;
-                }
-            "
-        }
 
-        // Cierre: disuelve hacia transparente
-        window-close {
-            duration-ms 180
-            curve "ease-out-quad"
-            custom-shader r"
-                void close_color(
-                    inout vec4 color,
-                    inout vec4 next_color,
-                    float clamped_progress,
-                    float unclamped_progress,
-                    vec2 coords,
-                    vec2 size_in_physical_pixels,
-                    float scale_factor
-                ) {
-                    float alpha = 1.0 - clamped_progress;
-                    color.a *= alpha;
-                    color.rgb *= alpha;
-                }
-            "
-        }
-
-        // Movimientos de cámara y ventanas: spring para sensación natural
+       // Movimientos de cámara y ventanas: spring para sensación natural
         horizontal-view-movement {
             spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
         }
@@ -177,8 +127,8 @@ in
 
         // --- Ventana / sesión ---
         Mod+Escape repeat=false { toggle-overview; }
-        Mod+Q repeat=false { close-window; }
-        Mod+Shift+Q { quit; }
+        Mod+Backspace repeat=false { close-window; }
+        Mod+Shift+Backspace { quit; }
         Mod+T { fullscreen-window; }
         Mod+Shift+T { expand-column-to-available-width; }
         Mod+F { toggle-window-floating; }
@@ -189,17 +139,17 @@ in
         // --- Navegación (J=izq, K=arriba, L=abajo, ;=der) ---
         // J/; = columnas, K/L = workspaces
         Mod+J { focus-column-left; }
-        Mod+Semicolon { focus-column-right; }
+        Mod+ntilde { focus-column-right; }
         Mod+L { focus-workspace-down; }
         Mod+K { focus-workspace-up; }
         Mod+Shift+J { move-column-left; }
-        Mod+Shift+Semicolon { move-column-right; }
+        Mod+Shift+ntilde { move-column-right; }
         Mod+Shift+L { move-column-to-workspace-down; }
         Mod+Shift+K { move-column-to-workspace-up; }
         Mod+Ctrl+J { focus-monitor-left; }
-        Mod+Ctrl+Semicolon { focus-monitor-right; }
+        Mod+Ctrl+ntilde { focus-monitor-right; }
         Mod+Ctrl+Shift+J { move-column-to-monitor-left; }
-        Mod+Ctrl+Shift+Semicolon { move-column-to-monitor-right; }
+        Mod+Ctrl+Shift+ntilde { move-column-to-monitor-right; }
 
         // --- Acceso directo a workspace (números en L1: MO(1) + fila superior) ---
         Mod+1 { focus-workspace 1; }

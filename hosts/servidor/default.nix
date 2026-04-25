@@ -47,11 +47,7 @@
   };
 
   # --- Secretos ---
-  # De momento solo necesitamos el hashedPassword de common.yaml.
-  # Cuando haya secretos específicos del servidor se añade secrets/servidor.yaml
-  # y se vuelve a cambiar a defaultSopsFile = ../../secrets/servidor.yaml.
-  sops.defaultSopsFile = ../../secrets/common.yaml;
-  sops.age.keyFile     = "/etc/age/keys.txt";
+  # g4ng_password se gestiona en users/g4ng/default.nix via age.secrets
 
 
   # --- Home Manager (solo herramientas de terminal) ---
