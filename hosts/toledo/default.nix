@@ -95,6 +95,7 @@
     xfce.thunar-volman
     xfce.tumbler
     gvfs
+    stremio-linux-shell
     tor-browser
     darktable
     chromium
@@ -107,7 +108,6 @@
           --set QT_SCALE_FACTOR 2
       '';
     })
-  ];
 
   misc.gaming.enable = true;
 

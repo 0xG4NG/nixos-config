@@ -2,7 +2,6 @@
 
 ## Niri (Window Manager)
 
-
 `Mod` = Super/Windows key
 
 ### Aplicaciones
@@ -10,28 +9,31 @@
 | Keybind | Accion |
 |---------|--------|
 | `Mod + Return` | Abrir terminal (Ghostty) |
-| `Mod + E` | Toggle launcher (Noctalia) |
+| `Mod + E` | Lanzador de apps (rofi drun) |
+| `Mod + W` | Toggle launcher (Noctalia) |
 | `Mod + X` | Selector de directorios (fsel) |
 | `Mod + /` | Portapapeles (cliphist) |
 | `Mod + Shift + /` | Borrar entrada del portapapeles |
+| `Mod + P` | Menu de energia |
 
 ### Ventanas
 
 | Keybind | Accion |
 |---------|--------|
-| `Mod + Q` | Cerrar ventana |
+| `Mod + Backspace` | Cerrar ventana |
 | `Mod + T` | Pantalla completa |
 | `Mod + Shift + T` | Expandir columna al ancho disponible |
 | `Mod + F` | Flotante on/off |
-| `Mod + R` | Cambiar preset de ancho de columna (40%/60%) |
+| `Mod + R` | Cambiar preset de ancho de columna |
 | `Mod + Escape` | Toggle overview |
+| `Mod + Shift + Backspace` | Salir de Niri |
 
-### Navegacion (J=izq, K=arriba, L=abajo, ;=der)
+### Navegacion (J=izq, K=arriba, L=abajo, ñ=der)
 
 | Keybind | Accion |
 |---------|--------|
 | `Mod + J` | Foco a columna izquierda |
-| `Mod + ;` | Foco a columna derecha |
+| `Mod + ñ` | Foco a columna derecha |
 | `Mod + K` | Foco a workspace arriba |
 | `Mod + L` | Foco a workspace abajo |
 
@@ -40,7 +42,7 @@
 | Keybind | Accion |
 |---------|--------|
 | `Mod + Shift + J` | Mover columna a la izquierda |
-| `Mod + Shift + ;` | Mover columna a la derecha |
+| `Mod + Shift + ñ` | Mover columna a la derecha |
 | `Mod + Shift + K` | Mover columna a workspace arriba |
 | `Mod + Shift + L` | Mover columna a workspace abajo |
 
@@ -49,15 +51,15 @@
 | Keybind | Accion |
 |---------|--------|
 | `Mod + Ctrl + J` | Foco a monitor izquierdo |
-| `Mod + Ctrl + ;` | Foco a monitor derecho |
+| `Mod + Ctrl + ñ` | Foco a monitor derecho |
 | `Mod + Ctrl + Shift + J` | Mover columna a monitor izquierdo |
-| `Mod + Ctrl + Shift + ;` | Mover columna a monitor derecho |
+| `Mod + Ctrl + Shift + ñ` | Mover columna a monitor derecho |
 
 ### Workspaces
 
 | Keybind | Accion |
 |---------|--------|
-| `Mod + 1-9` | Ir a workspace 1-9 (requiere chord L1 en TBK) |
+| `Mod + 1-9` | Ir a workspace 1-9 |
 | `Mod + Shift + 1-9` | Mover ventana a workspace 1-9 |
 
 ### Redimensionado
@@ -87,13 +89,6 @@
 | `Mod + S` | Captura de pantalla completa |
 | `Mod + Shift + S` | Captura de region |
 
-### Sesion
-
-| Keybind | Accion |
-|---------|--------|
-| `Mod + P` | Menu de energia (rofi) |
-| `Mod + Shift + Q` | Salir de Niri |
-
 ---
 
 ## Ghostty (Terminal)
@@ -106,28 +101,67 @@
 | `Ctrl + .` | Aumentar fuente (alternativa base layer) |
 | `Ctrl + ,` | Disminuir fuente (alternativa base layer) |
 | `Ctrl + 0` | Resetear tamaño de fuente |
-
----
-
-## Noctalia Shell (Menu de sesion)
-
-Dentro del menu de power:
-
-| Keybind | Accion |
-|---------|--------|
-| `1` | Bloquear |
-| `2` | Suspender |
-| `3` | Hibernar |
-| `4` | Reiniciar |
-| `5` | Cerrar sesion |
-| `6` | Apagar |
-| `7` | Reiniciar a UEFI |
+| `Ctrl + C` | Copiar |
+| `Ctrl + V` | Pegar |
 
 ---
 
 ## Neovim (NVF)
 
 `<leader>` = `Space`
+
+### Modos
+
+| Tecla | Modo |
+|-------|------|
+| `i` | Insert (antes del cursor) |
+| `a` | Insert (despues del cursor) |
+| `o` | Insert en linea nueva abajo |
+| `O` | Insert en linea nueva arriba |
+| `Esc` | Volver a Normal |
+| `v` | Visual (caracter) |
+| `V` | Visual (linea) |
+| `Ctrl + v` | Visual (bloque/columna) |
+
+### Navegacion — layout jklñ
+
+| Tecla | Accion |
+|-------|--------|
+| `j` | ← izquierda |
+| `k` | ↑ arriba |
+| `l` | ↓ abajo |
+| `ñ` | → derecha |
+| `w` | Siguiente palabra |
+| `b` | Palabra anterior |
+| `e` | Final de palabra |
+| `0` | Inicio de linea |
+| `$` | Final de linea |
+| `gg` | Inicio del archivo |
+| `G` | Final del archivo |
+| `Ctrl + d` | Scroll media pagina abajo |
+| `Ctrl + u` | Scroll media pagina arriba |
+
+### Seleccion y edicion
+
+| Tecla | Accion |
+|-------|--------|
+| `v` + movimiento | Seleccionar |
+| `viw` | Seleccionar palabra bajo cursor |
+| `vi"` | Seleccionar dentro de comillas |
+| `vi(` | Seleccionar dentro de parentesis |
+| `y` | Copiar seleccion (al portapapeles del sistema) |
+| `yy` | Copiar linea entera |
+| `p` | Pegar despues del cursor |
+| `P` | Pegar antes del cursor |
+| `x` | Borrar caracter bajo el cursor |
+| `dd` | Borrar linea entera |
+| `dw` | Borrar desde cursor hasta fin de palabra |
+| `diw` | Borrar palabra completa |
+| `d$` | Borrar hasta fin de linea |
+| `dl` | Borrar una linea abajo (d + movimiento) |
+| `u` | Deshacer |
+| `Ctrl + r` | Rehacer |
+| `< / >` (visual) | Indentar izquierda/derecha y mantener seleccion |
 
 ### Explorador de archivos (Neo-tree)
 
@@ -162,7 +196,10 @@ Dentro del menu de power:
 | `Space + sv` | Split vertical |
 | `Space + sh` | Split horizontal |
 | `Space + sx` | Cerrar split |
-| `Ctrl + j/k/l/;` | Navegar entre splits (izq/arriba/abajo/der) |
+| `Ctrl + j` | Ir a split izquierdo |
+| `Ctrl + k` | Ir a split arriba |
+| `Ctrl + l` | Ir a split abajo |
+| `Ctrl + ñ` | Ir a split derecho |
 
 ### LSP
 
@@ -176,7 +213,7 @@ Dentro del menu de power:
 | `Space + dn` | Siguiente diagnostico |
 | `Space + dp` | Anterior diagnostico |
 
-### Git
+### Git (Neogit / Telescope)
 
 | Keybind | Accion |
 |---------|--------|
@@ -192,15 +229,10 @@ Dentro del menu de power:
 | `Space + w` | Guardar |
 | `Space + q` | Salir |
 | `Space + h` | Quitar highlight de busqueda |
-| `Alt + j/k` | Mover linea arriba/abajo |
-| `Alt + j/k` (visual) | Mover seleccion arriba/abajo |
-| `< / >` (visual) | Indentar y mantener seleccion |
-
----
-
-## VSCode
-
-Sin keybindings personalizados. Usa los defaults de VSCode.
+| `Alt + j` (normal) | Mover linea abajo |
+| `Alt + k` (normal) | Mover linea arriba |
+| `Alt + j` (visual) | Mover seleccion abajo |
+| `Alt + k` (visual) | Mover seleccion arriba |
 
 ---
 
@@ -285,5 +317,5 @@ LSFT    .  .  .  .  .  │   ñ   -  =  [  ]   \
 - **Resize de columna**: `Mod + -` / `Mod + =` requiere `GUI + L2 + tecla` (chord),
   aceptable porque se usa poco.
 - **Audio**: `Mod + , / . / M` estan todos en capa base → acceso directo sin chord.
-- **`Mod + Ctrl + Shift + H/L`** (mover columna entre monitores) requiere 4 teclas;
-  usar ambas manos (thumb izq `GUI`, thumb der `CTL`, pinky `LSFT`, indice `H/L`).
+- **`Mod + Ctrl + Shift + J/ñ`** (mover columna entre monitores) requiere 4 teclas;
+  usar ambas manos (thumb izq `GUI`, thumb der `CTL`, pinky `LSFT`, indice `J/ñ`).
