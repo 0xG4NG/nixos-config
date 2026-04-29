@@ -19,8 +19,6 @@
         "ctrl+zero=reset_font_size"
         "ctrl+period=increase_font_size:1"
         "ctrl+comma=decrease_font_size:1"
-        "ctrl+c=copy_to_clipboard"
-        "ctrl+v=paste_from_clipboard"
       ];
     };
   };

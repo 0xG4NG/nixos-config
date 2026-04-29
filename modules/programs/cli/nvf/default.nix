@@ -23,6 +23,16 @@
 
         nix.enable = true;
         bash.enable = true;
+        lua.enable = true;
+        markdown.enable = true;
+        toml.enable = true;
+        yaml.enable = true;
+        json.enable = true;
+      };
+
+      visuals = {
+        indent-blankline.enable = true;
+        nvim-web-devicons.enable = true;
       };
 
       statusline.lualine.enable = true;
@@ -31,6 +41,27 @@
       filetree.neo-tree.enable = true;
       git.enable = true;
       git.neogit.enable = true;
+
+      luaConfigRC.devicons-setup = ''
+        vim.g.have_nerd_font = true
+      '';
+
+      luaConfigRC.neo-tree-navigation = ''
+        -- Neo-tree tiene su propio buffer con keymaps propios; remapear jklñ dentro de él
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = "neo-tree",
+          callback = function(ev)
+            local buf = ev.buf
+            local opts = { buffer = buf, noremap = false, silent = true }
+            -- j → h (cierra nodo / sube al padre)
+            vim.keymap.set("n", "j", "h", opts)
+            -- l → j (cursor abajo)
+            vim.keymap.set("n", "l", "j", opts)
+            -- ñ → l (abre nodo / entra al directorio)
+            vim.keymap.set("n", "ñ", "l", opts)
+          end,
+        })
+      '';
 
       keymaps = [
         # -- Navegación: jklñ en lugar de hjkl --
@@ -84,6 +115,11 @@
         { mode = "n"; key = "<leader>gb"; action = "<cmd>Telescope git_branches<CR>"; desc = "Git branches"; }
         { mode = "n"; key = "<leader>gc"; action = "<cmd>Telescope git_commits<CR>"; desc = "Git commits"; }
         { mode = "n"; key = "<leader>gs"; action = "<cmd>Telescope git_status<CR>"; desc = "Git status"; }
+
+        # -- k explícito (arriba) para consistencia en todos los modos --
+        { mode = "n"; key = "k"; action = "k"; desc = "Mover arriba"; noremap = true; }
+        { mode = "v"; key = "k"; action = "k"; desc = "Mover arriba"; noremap = true; }
+        { mode = "o"; key = "k"; action = "k"; desc = "Mover arriba"; noremap = true; }
 
         # -- Utilidades --
         { mode = "n"; key = "<leader>w"; action = "<cmd>w<CR>"; desc = "Guardar"; }

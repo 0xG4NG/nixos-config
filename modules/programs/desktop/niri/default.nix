@@ -1,20 +1,5 @@
 { config, pkgs, osConfig, ... }:
 
-let
-  c = config.lib.stylix.colors.withHashtag;
-
-  powermenu = pkgs.writeShellScript "powermenu" ''
-    options="  Apagar\n  Reiniciar\n  Suspender\n  Hibernar\n󰍃  Cerrar sesión"
-    chosen=$(printf "$options" | ${pkgs.rofi}/bin/rofi -dmenu -p "Sesión" -i)
-    case "$chosen" in
-      *"Apagar"*)        systemctl poweroff ;;
-      *"Reiniciar"*)     systemctl reboot ;;
-      *"Suspender"*)     systemctl suspend ;;
-      *"Hibernar"*)      systemctl hibernate ;;
-      *"Cerrar sesión"*) niri msg action quit ;;
-    esac
-  '';
-in
 {
   xdg.configFile."niri/config.kdl".text = ''
     environment {
@@ -53,7 +38,7 @@ in
     spawn-at-startup "noctalia-shell"
 
     layout {
-        gaps 16
+        gaps 32
         always-center-single-column
         preset-column-widths {
             proportion 0.5
@@ -63,6 +48,11 @@ in
         default-column-width { proportion 1.0; }
         focus-ring {
             off
+        }
+        border {
+            width 2
+            active-color "#CBA6F7"
+            inactive-color "#373737"
         }
     }
 
@@ -123,7 +113,6 @@ in
         Mod+X { spawn "foot" "-a" "launcher" "-e" "fsel" "-d"; }
         Mod+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-select"; }
         Mod+Shift+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-delete"; }
-        Mod+P repeat=false { spawn "${powermenu}"; }
 
         // --- Ventana / sesión ---
         Mod+Escape repeat=false { toggle-overview; }

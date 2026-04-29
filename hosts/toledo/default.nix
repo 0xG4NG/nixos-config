@@ -108,6 +108,7 @@
           --set QT_SCALE_FACTOR 2
       '';
     })
+  ];
 
   misc.gaming.enable = true;
 
