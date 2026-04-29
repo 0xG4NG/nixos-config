@@ -37,10 +37,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, disko, stylix, nvf, agenix, nur, ... }:
@@ -64,7 +60,6 @@
             {
               home-manager.sharedModules = [
                 nvf.homeManagerModules.default
-                inputs.noctalia.homeModules.default
               ];
               home-manager.extraSpecialArgs = { inherit inputs; };
             }

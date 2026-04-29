@@ -3,12 +3,11 @@
 let
   dns = [ "192.168.1.104" "1.1.1.1" ];
 
-  # Fuente única de verdad: toda la info de red por host.
-  # address es opcional en hosts con DHCP (se usa solo para /etc/hosts).
   profiles = {
     toledo = {
       type    = "networkmanager";
       address = "192.168.1.101";
+      gateway = "192.168.1.1";
     };
     laptop = {
       type = "networkmanager";
@@ -22,22 +21,37 @@ let
     };
   };
 
-  p    = profiles.${hostName};
-  isNM = p.type == "networkmanager";
+  p       = profiles.${hostName};
+  isNM    = p.type == "networkmanager";
+  hasAddr = p ? address;
 
   hostsMap = lib.mapAttrs'
     (name: cfg: lib.nameValuePair cfg.address [ name "${name}.lan" ])
     (lib.filterAttrs (_: cfg: cfg ? address) profiles);
 in
 {
-  networking.hostName    = hostName;
-  networking.hosts       = hostsMap;
+  networking.hostName        = hostName;
+  networking.hosts           = hostsMap;
   networking.firewall.enable = true;
   services.timesyncd.enable  = true;
 
   networking.networkmanager = lib.mkIf isNM {
     enable            = true;
     insertNameservers = dns;
+
+    # IP estática via NM si el perfil define address
+    ensureProfiles.profiles = lib.mkIf hasAddr {
+      "static-eth" = {
+        connection = { id = "static-eth"; type = "ethernet"; };
+        ipv4 = {
+          method    = "manual";
+          addresses = "${p.address}/24";
+          gateway   = p.gateway;
+          dns       = lib.concatStringsSep "," dns;
+        };
+        ipv6.method = "ignore";
+      };
+    };
   };
 
   networking.useDHCP        = lib.mkIf (!isNM) false;

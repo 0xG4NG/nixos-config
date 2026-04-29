@@ -35,7 +35,7 @@
     screenshot-path "~/screenshots/Screenshot-%Y-%m-%d-%H-%M-%S.png"
     spawn-at-startup "${pkgs.swaybg}/bin/swaybg" "-i" "${./wallpapers/996764.jpg}"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
-    spawn-at-startup "noctalia-shell"
+    spawn-at-startup "${pkgs.waybar}/bin/waybar"
 
     layout {
         gaps 32
@@ -109,7 +109,6 @@
         // --- Lanzadores (capa base del TBK Mini) ---
         Mod+Return { spawn "ghostty"; }
         Mod+E { spawn "rofi" "-show" "drun"; }
-        Mod+W { spawn "noctalia-shell" "msg" "launcher" "toggle"; }
         Mod+X { spawn "foot" "-a" "launcher" "-e" "fsel" "-d"; }
         Mod+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-select"; }
         Mod+Shift+Slash { spawn "foot" "-a" "launcher" "-e" "cliphist-delete"; }

@@ -84,7 +84,6 @@
     vesktop
     unzip
     ilspycmd
-    bottles
     distrobox
     obs-studio
     heroic
@@ -92,7 +91,6 @@
     xfce.thunar-volman
     xfce.tumbler
     gvfs
-    stremio-linux-shell
     tor-browser
     darktable
     chromium

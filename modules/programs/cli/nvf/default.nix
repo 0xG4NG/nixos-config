@@ -24,7 +24,10 @@
         nix.enable = true;
         bash.enable = true;
         lua.enable = true;
-        markdown.enable = true;
+        markdown = {
+          enable = true;
+          format.enable = false;
+        };
         toml.enable = true;
         yaml.enable = true;
         json.enable = true;
