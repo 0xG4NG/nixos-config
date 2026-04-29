@@ -52,7 +52,7 @@
       mkHost = { host, hostSystem ? system }:
         nixpkgs.lib.nixosSystem {
           system = hostSystem;
-          specialArgs = { inherit inputs; };
+          specialArgs = { inherit inputs; hostName = host; };
           modules = [
             disko.nixosModules.disko
             stylix.nixosModules.stylix

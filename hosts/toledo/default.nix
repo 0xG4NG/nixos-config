@@ -52,9 +52,6 @@
     deps = [ "agenix" ];
   };
 
-  networking.hostName = "toledo";
-  networking.networkmanager.enable = true;
-
   hardware.i2c.enable = true;
 
   environment.systemPackages = with pkgs; [

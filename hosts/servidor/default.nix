@@ -17,20 +17,6 @@
     timeout = 3;
   };
 
-  # --- Red ---
-  # Ajusta la interfaz con: ip link (ej: enp3s0, eno1, eth0...)
-  networking.hostName    = "servidor";
-  networking.useDHCP     = false;
-  networking.interfaces."enp6s0" = {
-    useDHCP = false;
-    ipv4.addresses = [{
-      address      = "192.168.1.100";
-      prefixLength = 24;
-    }];
-  };
-  networking.defaultGateway = "192.168.1.1";
-  networking.nameservers    = [ "192.168.1.104" "8.8.8.8" ];
-
   # --- SSH ---
   services.openssh = {
     enable = true;
@@ -40,11 +26,7 @@
     };
   };
 
-  # --- Firewall ---
-  networking.firewall = {
-    enable          = true;
-    allowedTCPPorts = [ 22 ];
-  };
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
   # --- Secretos ---
   # g4ng_password se gestiona en users/g4ng/default.nix via age.secrets

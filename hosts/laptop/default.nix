@@ -43,10 +43,6 @@
   services.displayManager.sddm.enable = true;
   services.xserver.enable             = true;
 
-  # --- Red (WiFi + cable via NetworkManager) ---
-  networking.hostName              = "laptop";
-  networking.networkmanager.enable = true;
-
   # --- Secrets ---
   # Por ahora el laptop solo usa secrets/common.yaml (hashedPassword del usuario).
   # Cuando tenga su propia clave age en .sops.yaml se puede añadir secrets/laptop.yaml

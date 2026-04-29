@@ -7,6 +7,7 @@
     ../../modules/system/bluetooth
     ../../modules/system/desktop-base
     ../../modules/system/locale-es
+    ../../modules/network
   ];
 
   nixpkgs.overlays = [ inputs.nur.overlays.default ];
