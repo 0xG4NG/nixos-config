@@ -5,7 +5,7 @@
   stylix = {
     enable = true;
     autoEnable = true;
-    image = ./wallpapers/wallhaven-839g92.png;
+    image = ../../programs/desktop/niri/wallpapers/wallhaven-qrgvll.png;
     base16Scheme = {
       base00 = "#1d1d1d";
       base01 = "#282828";

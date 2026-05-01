@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./hardware-configuration.nix
     ./disk.nix
     ../../users/g4ng
     # nvf (neovim) está configurado con theme.name = "base16", así que necesita

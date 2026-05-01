@@ -10,6 +10,8 @@
     ../../../modules/programs/desktop/cosmic
     ../../../modules/programs/browser/firefox
     ../../../modules/programs/desktop/vscode
+    ../../../modules/programs/media/mpv
+    ../../../modules/programs/media/imv
     ../../../modules/theming/qt
   ];
 

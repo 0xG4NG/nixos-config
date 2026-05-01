@@ -12,7 +12,7 @@ let
     laptop = {
       type = "networkmanager";
     };
-    servidor = {
+    xeon = {
       type    = "static";
       address = "192.168.1.100";
       iface   = "enp6s0";

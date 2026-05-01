@@ -33,7 +33,7 @@
 
     prefer-no-csd
     screenshot-path "~/screenshots/Screenshot-%Y-%m-%d-%H-%M-%S.png"
-    spawn-at-startup "${pkgs.swaybg}/bin/swaybg" "-i" "${./wallpapers/996764.jpg}"
+    spawn-at-startup "${pkgs.swaybg}/bin/swaybg" "-i" "${config.stylix.image}"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
     spawn-at-startup "${pkgs.waybar}/bin/waybar"
 
