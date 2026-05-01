@@ -1,7 +1,7 @@
 { hostName, lib, ... }:
 
 let
-  dns = [ "192.168.1.104" "1.1.1.1" ];
+  dns = [ "8.8.8.8" "8.8.4.4" ];
 
   profiles = {
     toledo = {
