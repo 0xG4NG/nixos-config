@@ -6,6 +6,7 @@
 
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    defaultKeymap = "emacs";
 
     shellAliases = {
       # Rebuild

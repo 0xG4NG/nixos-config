@@ -12,6 +12,8 @@
       font-size = 16;
       font-thicken = true;
       font-thicken-strength = 120;
+      cursor-style = "block";
+      shell-integration-features = "no-cursor";
       keybind = [
         "global:cmd+shift+space=toggle_quick_terminal"
         "ctrl+equal=increase_font_size:1"
