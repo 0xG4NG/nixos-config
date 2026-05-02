@@ -22,7 +22,8 @@ install host target:
 deploy host target=host:
     nixos-rebuild switch --flake .#{{host}} \
         --target-host g4ng@{{target}} \
-        --use-remote-sudo
+        --use-remote-sudo \
+        --ask-sudo-password
 
 # Formatear código Nix (requiere: nix develop)
 fmt:

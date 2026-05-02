@@ -29,8 +29,6 @@
 
   networking.firewall.allowedTCPPorts = [ 22 ];
 
-  security.sudo.wheelNeedsPassword = false;
-
   # --- Secretos ---
   # g4ng_password se gestiona en users/g4ng/default.nix via age.secrets
 
