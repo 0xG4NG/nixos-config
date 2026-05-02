@@ -12,6 +12,7 @@
     ../../modules/programs/desktop/bitwarden
     ../../modules/programs/keyboard/qmk
     ../../modules/programs/gaming
+    ../../modules/programs/gaming/ddo.nix
   ];
 
   # --- Módulos del sistema compartidos ---
@@ -55,6 +56,8 @@
   hardware.i2c.enable = true;
 
   environment.systemPackages = with pkgs; [
+    nixos-anywhere
+    inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.mo2installer
     ddcutil
     claude-code
@@ -87,9 +90,9 @@
     distrobox
     obs-studio
     heroic
-    xfce.thunar
-    xfce.thunar-volman
-    xfce.tumbler
+    thunar
+    thunar-volman
+    tumbler
     gvfs
     tor-browser
     darktable
@@ -106,6 +109,7 @@
   ];
 
   misc.gaming.enable = true;
+  misc.ddo.enable    = true;
 
   programs.firefox.enable = true;
   programs.niri.enable    = true;

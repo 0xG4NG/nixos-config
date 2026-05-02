@@ -12,7 +12,7 @@
 
   nixpkgs.overlays = [ inputs.nur.overlays.default ];
 
-  age.identityPaths = [ "/etc/age/keys.txt" ];
+  age.identityPaths = [ "/etc/age/keys.txt" "/etc/ssh/ssh_host_ed25519_key" ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -44,5 +44,6 @@
     tree
     cmatrix
     cava
+    ghostty
   ];
 }

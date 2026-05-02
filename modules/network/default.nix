@@ -12,10 +12,10 @@ let
     laptop = {
       type = "networkmanager";
     };
-    xeon = {
+    router = {
       type    = "static";
       address = "192.168.1.100";
-      iface   = "enp6s0";
+      iface   = "eno1";
       prefix  = 24;
       gateway = "192.168.1.1";
     };

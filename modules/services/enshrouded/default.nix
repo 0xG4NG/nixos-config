@@ -149,7 +149,7 @@ in
 
       path = with pkgs; [
         steamcmd
-        wineWowPackages.stable
+        wineWow64Packages.stable
         winetricks
         jq
         coreutils
@@ -171,7 +171,7 @@ in
         Group            = cfg.group;
         WorkingDirectory = "${cfg.dataDir}/server";
         ExecStartPre     = "+${startScript}";
-        ExecStart        = "${pkgs.wineWowPackages.stable}/bin/wine ${cfg.dataDir}/server/enshrouded_server.exe";
+        ExecStart        = "${pkgs.wineWow64Packages.stable}/bin/wine ${cfg.dataDir}/server/enshrouded_server.exe";
         Restart          = "on-failure";
         RestartSec       = 30;
         TimeoutStopSec   = 90;

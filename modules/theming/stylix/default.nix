@@ -56,5 +56,7 @@
       name = "Bibata-Modern-Classic";
       size = 24;
     };
+
+    targets.qt.enable = false;
   };
 }

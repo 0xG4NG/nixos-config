@@ -26,6 +26,11 @@
     groups.g4ng = {
       gid = 1000;
     };
-    users.root.hashedPassword = "!";
+    users.root = {
+      hashedPassword = "!";
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH+ktRXEN5IJwRBS+kA6K6T/FSHcO1pcXlz2TRaQQtCN"
+      ];
+    };
   };
 }
