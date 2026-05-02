@@ -35,7 +35,7 @@
   # --- Home Manager (solo herramientas de terminal) ---
   home-manager = {
     useGlobalPkgs        = true;
-    useUserPackages      = false;
+    useUserPackages      = true;
     backupFileExtension  = "backup";
     users.g4ng.imports   = [ ../../users/g4ng/dots/common.nix ];
   };

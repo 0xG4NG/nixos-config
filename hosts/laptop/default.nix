@@ -8,6 +8,21 @@
   ];
 
   # --- Módulos compartidos ---
+  misc.allowUnfreeNames = [
+    "claude-code"
+    "corefonts"
+    "nvidia-settings"
+    "nvidia-x11"
+    "obsidian"
+    "steam"
+    "steam-original"
+    "steam-run"
+    "steam-unwrapped"
+    "ttf-mscorefonts-installer"
+    "vesktop"
+    "vscode"
+  ];
+
   misc.audio.enable        = true;
   misc.bluetooth.enable    = true;
   misc.desktop-base.enable = true;
@@ -42,17 +57,6 @@
   # --- Display ---
   services.displayManager.sddm.enable = true;
   services.xserver.enable             = true;
-
-  # --- Secrets ---
-  # Por ahora el laptop solo usa secrets/common.yaml (hashedPassword del usuario).
-  # Cuando tenga su propia clave age en .sops.yaml se puede añadir secrets/laptop.yaml
-  # con git_email y recrear la plantilla de gitconfig como en toledo.
-  sops.defaultSopsFile = ../../secrets/common.yaml;
-  sops.age.keyFile     = "/etc/age/keys.txt";
-
-  systemd.tmpfiles.rules = [
-    "z /etc/age/keys.txt 0600 root root -"
-  ];
 
   # --- Batería ---
   services.power-profiles-daemon.enable = true;
@@ -91,7 +95,7 @@
   # --- Home Manager ---
   home-manager = {
     useGlobalPkgs       = true;
-    useUserPackages     = false;
+    useUserPackages     = true;
     backupFileExtension = "backup";
     users.g4ng.imports  = [
       ../../users/g4ng/dots/common.nix

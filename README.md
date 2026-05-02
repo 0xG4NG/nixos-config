@@ -10,7 +10,7 @@ Configuración de NixOS gestionada con flakes. Auto-descubre hosts y centraliza 
 | `laptop` | Portátil (WIP) | — | NVIDIA (Optimus) |
 | `servidor` | Homelab (WIP) | — | headless |
 
-Base: `nixos-unstable` + `home-manager` + `stylix` + `agenix` + `nix-gaming` + `nvf` + `noctalia`.
+Base: `nixos-unstable` + `home-manager` + `stylix` + `agenix` + `nix-gaming` + `nvf`.
 
 ## Estructura
 
@@ -28,16 +28,19 @@ nixos-config/
 │
 ├── modules/
 │   ├── hardware/
+│   │   ├── ddcutil/              # Control DDC/CI sobre I²C (brillo monitor)
 │   │   └── keyboard/tbk-mini/    # Firmware QMK para TBK Mini Splinky (RP2040)
 │   ├── programs/
-│   │   ├── browser/firefox/
+│   │   ├── browser/{firefox,tor-browser}/
 │   │   ├── cli/{zsh,nvf,fastfetch,cava,cmatrix}/
-│   │   ├── desktop/{ghostty,niri,hyprland,noctalia,rofi,cosmic,vscode,sddm,bitwarden}/
-│   │   ├── gaming/               # Steam + Gamescope + GameMode + libs 32-bit
-│   │   ├── keyboard/qmk/         # Opciones hardware.qmk (udev, plugdev…)
-│   │   └── media/davinci-resolve/  # Workarounds RDNA 4 (Rusticl + stub)
+│   │   ├── desktop/{ghostty,niri,rofi,cosmic,vscode,sddm,bitwarden,swaync,waybar,file-manager,orca-slicer}/
+│   │   ├── gaming/               # Steam + Gamescope + GameMode + libs 32-bit (+ ddo, heroic)
+│   │   ├── keyboard/{qmk,vial}/  # Opciones hardware.qmk + Vial wrapper HiDPI
+│   │   ├── media/{davinci-resolve,mpv,imv}/  # DaVinci con workarounds RDNA 4
+│   │   └── virtualisation/       # podman + libvirtd + virt-manager
 │   ├── services/
 │   │   ├── syncthing/            # Wrapper con role = client|server
+│   │   ├── sunshine/             # Game streaming (Moonlight) + firewall
 │   │   └── enshrouded/           # Servidor dedicado Enshrouded vía Wine
 │   ├── system/
 │   │   ├── audio/                # Pipewire + rtkit + low-latency
@@ -147,7 +150,3 @@ Tema unificado (colores base16 estilo Catppuccin Mocha, fuente IosevkaTerm Nerd 
 
 ### `modules/theming/qt`
 Theming Qt vía Kvantum (`KvGnomeDark`), coherente con el esquema de Stylix.
-
-## Inspiración
-
-- [notthebee/nix-config](https://git.notthebe.ee/notthebee/nix-config)

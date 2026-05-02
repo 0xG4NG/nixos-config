@@ -5,8 +5,6 @@ let
 
   wine = pkgs.wineWow64Packages.staging;
 
-  gamePath = "/home/g4ng/juegos/Dragon's Dogma Online 16.04.2025/ddo_launcher.exe";
-
   ddo-pkg = pkgs.symlinkJoin {
     name = "ddo";
     paths = [
@@ -24,7 +22,7 @@ let
           WINEPREFIX="$PREFIX" WINEARCH=win32 ${pkgs.winetricks}/bin/winetricks -q dotnetdesktop9
         fi
 
-        exec ${wine}/bin/wine "${gamePath}"
+        exec ${wine}/bin/wine "${cfg.gamePath}"
       '')
       (pkgs.makeDesktopItem {
         name        = "ddo";
@@ -40,6 +38,12 @@ in
 {
   options.misc.ddo = {
     enable = lib.mkEnableOption "Dragon's Dogma Online (Wine + DXVK launcher)";
+
+    gamePath = lib.mkOption {
+      type        = lib.types.str;
+      description = "Ruta absoluta al ejecutable ddo_launcher.exe.";
+      example     = "/home/g4ng/juegos/Dragon's Dogma Online/ddo_launcher.exe";
+    };
   };
 
   config = lib.mkIf cfg.enable {

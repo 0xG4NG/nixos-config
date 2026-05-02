@@ -9,11 +9,6 @@
     defaultKeymap = "emacs";
 
     shellAliases = {
-      # Rebuild
-      nrs  = "sudo nixos-rebuild switch --flake ~/nixos-config#toledo";
-      nrt  = "sudo nixos-rebuild test   --flake ~/nixos-config#toledo";
-      nrb  = "sudo nixos-rebuild boot   --flake ~/nixos-config#toledo";
-
       # Flake
       nfu  = "cd ~/nixos-config && nix flake update";
       nfc  = "cd ~/nixos-config && nix flake check";

@@ -10,7 +10,8 @@
       push.autoSetupRemote = true;
     };
 
-    # Email comes from sops secret to keep it out of the nix store
+    # Email vive en /run/secrets/gitconfig (generado por activation script
+    # en hosts/toledo/default.nix a partir del secreto agenix git_email).
     includes = [{ path = "/run/secrets/gitconfig"; }];
   };
 }

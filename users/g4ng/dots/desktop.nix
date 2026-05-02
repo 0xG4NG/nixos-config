@@ -15,9 +15,12 @@
     ../../../modules/theming/qt
   ];
 
+  misc.ghostty.enable = true;
+  misc.swaync.enable  = true;
+  misc.rofi.enable    = true;
+
   gtk.iconTheme = {
     package = pkgs.papirus-icon-theme;
     name    = "Papirus-Dark";
   };
-
 }
