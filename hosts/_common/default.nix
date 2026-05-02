@@ -34,6 +34,7 @@
   environment.systemPackages = with pkgs; [
     wget
     just
+    nh
     git
     gh
     neovim
