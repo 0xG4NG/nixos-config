@@ -17,6 +17,13 @@
     example     = [ "obsidian" "steam" ];
   };
 
+  options.misc.allowInsecureNames = lib.mkOption {
+    type        = lib.types.listOf lib.types.str;
+    default     = [];
+    description = "Paquetes inseguros permitidos en este host (nombre con versión, p.ej. electron-39.8.10).";
+    example     = [ "electron-39.8.10" ];
+  };
+
   config = {
     nixpkgs.overlays = [ inputs.nur.overlays.default ];
 
@@ -32,6 +39,8 @@
 
     nixpkgs.config.allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) config.misc.allowUnfreeNames;
+
+    nixpkgs.config.permittedInsecurePackages = config.misc.allowInsecureNames;
 
     programs.zsh.enable = true;
 

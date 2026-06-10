@@ -10,6 +10,7 @@
     ../../modules/services/syncthing
     ../../modules/services/sunshine
     ../../modules/programs/desktop/sddm
+    ../../modules/programs/desktop/kde
     ../../modules/programs/desktop/bitwarden
     ../../modules/programs/desktop/file-manager
     ../../modules/programs/desktop/orca-slicer
@@ -38,7 +39,13 @@
     "ttf-mscorefonts-installer"
     "vesktop"
     "vial"
+    "lycheeslicer"
     "vscode"
+  ];
+
+  # --- Paquetes inseguros permitidos ---
+  misc.allowInsecureNames = [
+    "electron-39.8.10" # EOL; arrastrado por una app electron
   ];
 
   # --- Módulos del sistema compartidos ---
@@ -55,6 +62,7 @@
   # --- Módulos opt-in ---
   misc.gaming.enable        = true;
   misc.heroic.enable        = true;
+  misc.kde.enable           = true;
   misc.ddo = {
     enable   = true;
     gamePath = "/home/g4ng/juegos/Dragon's Dogma Online 16.04.2025/ddo_launcher.exe";
@@ -176,6 +184,8 @@
     chromium
     darktable
     obs-studio
+    freecad
+    lycheeslicer
 
     # Dev
     claude-code

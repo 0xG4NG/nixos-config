@@ -13,11 +13,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.sunshine ];
-
-    networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 47984 47989 48010 ];
-      allowedUDPPorts = [ 47998 47999 48000 48002 ];
+    services.sunshine = {
+      enable             = true;
+      capSysAdmin        = true;   # cap_sys_admin via security wrapper (KMS capture)
+      openFirewall       = cfg.openFirewall;
     };
   };
 }

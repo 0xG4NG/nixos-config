@@ -58,5 +58,8 @@
     };
 
     targets.qt.enable = false;
+    # El target de kmscon usa services.kmscon.{extraConfig,fonts}, eliminadas en
+    # nixpkgs actual. No usamos kmscon, así que lo desactivamos.
+    targets.kmscon.enable = false;
   };
 }

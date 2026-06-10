@@ -20,6 +20,8 @@ in
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
 
+    environment.systemPackages = [ pkgs.xdg-utils ];
+
     services.gnome.gnome-keyring.enable           = lib.mkIf cfg.gnomeKeyring true;
     security.pam.services.sddm.enableGnomeKeyring = lib.mkIf cfg.gnomeKeyring true;
   };

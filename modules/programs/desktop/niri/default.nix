@@ -29,6 +29,9 @@
                 variant "${osConfig.services.xserver.xkb.variant}"
             }
         }
+        tablet {
+            map-to-output "DP-2"
+        }
     }
 
     prefer-no-csd
