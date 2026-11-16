@@ -1,11 +1,14 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
-    ./disk.nix
+    ./disko.nix
+    ./hardware.nix
     ../../users/g4ng
     ../../modules/theming/stylix
   ];
+
+  age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   # --- Módulos compartidos ---
   misc.allowUnfreeNames = [
@@ -37,20 +40,19 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
-    modesetting.enable     = true;
-    open                   = false;
-    nvidiaSettings         = true;
-    powerManagement.enable = true;   # suspend/resume estable
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    open = true;                       # RTX 3060 (Ampere) → driver abierto, recomendado
+    modesetting.enable = true;
+    nvidiaSettings = true;
+    powerManagement.enable = true;
+    powerManagement.finegrained = true; # apaga la 3060 cuando no se usa
+    prime = {
+      offload.enable = true;
+      offload.enableOffloadCmd = true;
+      intelBusId  = "PCI:0:2:0";       # 00:02.0 UHD Graphics
+      nvidiaBusId = "PCI:1:0:0";       # 01:00.0 RTX 3060
+    };
   };
-
-  # El Omen 15 tiene gráficos híbridos Intel+NVIDIA (Optimus).
-  # Rellena los bus IDs con: lspci | grep -E "VGA|3D"
-  # hardware.nvidia.prime = {
-  #   offload.enable           = true;
-  #   offload.enableOffloadCmd = true;
-  #   intelBusId  = "PCI:0:2:0";  # lspci | grep -E "VGA|3D"
-  #   nvidiaBusId = "PCI:1:0:0";
-  # };
 
   hardware.graphics.enable = true;
 
@@ -103,5 +105,5 @@
     ];
   };
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 }
