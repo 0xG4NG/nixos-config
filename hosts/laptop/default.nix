@@ -54,15 +54,15 @@
 
   hardware.graphics.enable = true;
 
-  # --- Display ---
-  services.displayManager.sddm.enable = true;
-  services.xserver.enable             = true;
-
   # --- Batería ---
   services.power-profiles-daemon.enable = true;
 
   # --- Escritorio ---
-  programs.niri.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
+  services.desktopManager.plasma6.enable = true;
 
   # --- Paquetes ---
   environment.systemPackages = with pkgs; [
