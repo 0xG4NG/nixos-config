@@ -1,152 +1,89 @@
 # nixos-config
 
-Configuración de NixOS gestionada con flakes. Auto-descubre hosts y centraliza módulos reutilizables para expandirse a un pequeño homelab.
+Configuración declarativa de NixOS para un pequeño parque de máquinas personales (escritorio, portátil y un nodo de homelab), gestionada con **flakes**, **home-manager** y **agenix**.
 
-## Hardware
+- Los hosts se **auto-descubren**: cada carpeta en `hosts/` (salvo `_common`) se convierte en una `nixosConfiguration`.
+- Casi todos los módulos son **opt-in** mediante opciones `misc.<módulo>.enable`, de modo que cada host elige lo que necesita.
+- Tema unificado con **Stylix** (base16 oscuro, Iosevka Nerd Font, cursor Bibata) aplicado a terminal, editor, compositor, GTK y Qt.
+- Incluye firmware **QMK/Vial** propio para el teclado split TBK Mini, compilado de forma reproducible con Nix.
 
-| Host | Rol | CPU | GPU |
-|------|-----|-----|-----|
-| `toledo` | Escritorio principal | AMD Ryzen 9 7950X | AMD Radeon RX 9070 XT |
-| `laptop` | Portátil (WIP) | — | NVIDIA (Optimus) |
-| `servidor` | Homelab (WIP) | — | headless |
+## Hosts
 
-Base: `nixos-unstable` + `home-manager` + `stylix` + `agenix` + `nix-gaming` + `nvf`.
+| Host | Rol | Hardware | Escritorio | Estado |
+|------|-----|----------|------------|--------|
+| [`toledo`](docs/hosts.md#toledo) | Escritorio principal | AMD Ryzen 9 7950X · Radeon RX 9070 XT (RDNA 4) · 2× 4K@144 | Niri (Wayland) + KDE Plasma 6 | Activo |
+| [`laptop`](docs/hosts.md#laptop) | Portátil | Intel (UHD) + NVIDIA RTX 3060 (PRIME offload) · LUKS + btrfs | KDE Plasma 6 | Activo |
+| [`router`](docs/hosts.md#router) | Nodo homelab headless | NVMe, IP estática `192.168.1.100` | — (solo SSH) | WIP |
+
+## Stack
+
+| Input | Uso |
+|-------|-----|
+| `nixpkgs` (`nixos-unstable`) | Paquetes y módulos base |
+| `home-manager` | Dotfiles del usuario `g4ng` |
+| `disko` | Particionado declarativo (usado por `nixos-anywhere`) |
+| `stylix` | Theming global |
+| `nvf` | Neovim declarativo |
+| `agenix` | Secretos cifrados con age |
+| `nix-gaming` | Optimizaciones de plataforma, Pipewire low-latency, `mo2installer` |
+| `NUR` | Extensiones de Firefox (`rycee.firefox-addons`) |
+
+## Inicio rápido
+
+```bash
+git clone git@github.com:0xg4ng/nixos-config.git ~/nixos-config
+cd ~/nixos-config
+nix develop        # just, nh, agenix, age, deadnix, nixfmt, nixos-anywhere
+just switch        # aplica la configuración del host actual (nh os switch)
+```
+
+`nh` detecta el host por `hostname`, así que el nombre de la máquina debe coincidir con la carpeta de `hosts/`.
+
+Comandos más usados (lista completa en [docs/workflow.md](docs/workflow.md)):
+
+```bash
+just dry-run                         # build sin aplicar
+just deploy router 192.168.1.100     # aplica en un host remoto por SSH
+just install router root@192.168.1.100  # instalación desde cero con nixos-anywhere
+just update                          # nix flake update
+just fmt                             # deadnix + nixfmt
+just tbk-flash                       # flashea una mitad del TBK Mini
+```
 
 ## Estructura
 
 ```
 nixos-config/
-├── flake.nix                     # Inputs, auto-descubrimiento de hosts, devShell
-├── justfile                      # Tareas comunes (switch, deploy, fmt, tbk-flash…)
-├── secrets.nix                   # Claves age por host y reglas de cifrado (agenix)
-│
+├── flake.nix          # Inputs, mkHost, auto-descubrimiento de hosts, paquete firmware, devShell
+├── flake.lock
+├── justfile           # Tareas: switch, deploy, install, fmt, update, tbk-flash…
+├── secrets.nix        # Destinatarios age de cada secreto (agenix)
+├── secrets/           # *.age cifrados
+├── docs/              # Documentación (ver índice abajo)
 ├── hosts/
-│   ├── _common/                  # Config compartida por todos los hosts
-│   ├── toledo/                   # Escritorio (activo)
-│   ├── laptop/                   # Portátil
-│   └── servidor/                 # Servidor headless (IP estática)
-│
+│   ├── _common/       # Base de todos los hosts + opciones misc.allowUnfreeNames / allowInsecureNames
+│   ├── toledo/        # Escritorio
+│   ├── laptop/        # Portátil
+│   └── router/        # Homelab headless
 ├── modules/
-│   ├── hardware/
-│   │   ├── ddcutil/              # Control DDC/CI sobre I²C (brillo monitor)
-│   │   └── keyboard/tbk-mini/    # Firmware QMK para TBK Mini Splinky (RP2040)
-│   ├── programs/
-│   │   ├── browser/{firefox,tor-browser}/
-│   │   ├── cli/{zsh,nvf,fastfetch,cava,cmatrix}/
-│   │   ├── desktop/{ghostty,niri,rofi,cosmic,vscode,sddm,bitwarden,swaync,waybar,file-manager,orca-slicer}/
-│   │   ├── gaming/               # Steam + Gamescope + GameMode + libs 32-bit (+ ddo, heroic)
-│   │   ├── keyboard/{qmk,vial}/  # Opciones hardware.qmk + Vial wrapper HiDPI
-│   │   ├── media/{davinci-resolve,mpv,imv}/  # DaVinci con workarounds RDNA 4
-│   │   └── virtualisation/       # podman + libvirtd + virt-manager
-│   ├── services/
-│   │   ├── syncthing/            # Wrapper con role = client|server
-│   │   ├── sunshine/             # Game streaming (Moonlight) + firewall
-│   │   └── enshrouded/           # Servidor dedicado Enshrouded vía Wine
-│   ├── system/
-│   │   ├── audio/                # Pipewire + rtkit + low-latency
-│   │   ├── boot/                 # systemd-boot + EFI
-│   │   ├── bluetooth/            # bluez + blueman
-│   │   ├── desktop-base/         # xdg.portal + gnome-keyring
-│   │   └── locale-es/            # es_ES.UTF-8 + teclado us-acentos
-│   └── theming/
-│       ├── stylix/               # Esquema base16, fuentes, cursor, wallpaper
-│       └── qt/                   # Kvantum para apps Qt
-│
-├── users/
-│   └── g4ng/
-│       ├── default.nix           # Usuario NixOS (uid, grupos, shell, hashedPasswordFile)
-│       ├── git.nix               # Config git (email vía agenix)
-│       └── dots/
-│           ├── common.nix        # Home-Manager base (CLI)
-│           └── desktop.nix       # Home-Manager escritorio (GUI)
-│
-└── secrets/
-    ├── g4ng_password.age         # Hash de contraseña del usuario (todos los hosts)
-    └── git_email.age             # Email de git (toledo)
+│   ├── hardware/      # ddcutil, firmware TBK Mini
+│   ├── network/       # Perfiles de red por host (NM o estática) + /etc/hosts
+│   ├── programs/      # browser, cli, desktop, gaming, keyboard, media, virtualisation
+│   ├── services/      # syncthing, sunshine, enshrouded
+│   ├── system/        # audio, boot, bluetooth, desktop-base, locale-es
+│   └── theming/       # stylix, qt (Kvantum)
+└── users/g4ng/        # Usuario del sistema + perfiles home-manager (common / desktop)
 ```
 
-## Hosts
+## Documentación
 
-Los hosts se auto-descubren: cualquier subdirectorio en `hosts/` que no sea `_common` se registra automáticamente como `nixosConfiguration`. Para añadir un host basta con crear `hosts/<nombre>/default.nix`.
-
-### toledo (escritorio)
-
-Escritorio completo con Niri como compositor Wayland. Destacado:
-
-- **Gaming**: Steam, Gamescope, GameMode, nix-gaming platform optimizations, Heroic, Bottles, mo2installer.
-- **Virtualización**: libvirt/QEMU (TPM virtual para Windows 11) + Podman + Distrobox.
-- **Streaming**: Sunshine (game streaming) con puertos abiertos.
-- **3D printing**: OrcaSlicer (wrappeado para compatibilidad Wayland/X11).
-- **Privacidad**: Tor (cliente SOCKS5 en :9050) + Tor Browser.
-- **i2c**: habilitado para control de monitor vía `ddcutil`.
-- **Flatpak**: habilitado.
-
-## Flujo de trabajo
-
-```bash
-nix develop               # Entra al devShell (just, nh, agenix, age, deadnix, nixfmt…)
-
-just switch               # Aplica la configuración al host actual
-just dry-run              # Build sin aplicar
-just diff                 # Diff entre la generación actual y la nueva
-just deploy <host> <tgt>  # Deploy remoto vía SSH
-just install <host> <tgt> # Instalación nueva con nixos-anywhere
-just fmt                  # deadnix + nixfmt
-just clean                # GC + store optimise (14 días)
-just update               # nix flake update
-just update-input <input> # Actualiza un input específico (ej: nixpkgs)
-
-# TBK Mini
-just tbk-build            # Solo compila el firmware (sin flashear)
-just tbk-flash            # Espera RPI-RP2, monta y copia el .uf2 automáticamente
-```
-
-## Secretos (agenix)
-
-Todos los secretos viven cifrados en `secrets/*.age`. Las reglas de cifrado están en [`secrets.nix`](secrets.nix): cada host tiene su clave age pública y solo los hosts autorizados pueden descifrar sus ficheros.
-
-```bash
-# Editar un secreto existente
-agenix -e secrets/git_email.age
-
-# Crear uno nuevo (cifrado automáticamente con las claves de secrets.nix)
-agenix -e secrets/nuevo.age
-```
-
-Para declarar el secreto en un módulo:
-
-```nix
-age.secrets.mi_token = {
-  file  = ./../../secrets/common.age;
-  owner = "g4ng";
-};
-# Uso
-services.foo.tokenFile = config.age.secrets.mi_token.path;
-```
-
-La clave age del host se genera con `ssh-to-age` a partir de `/etc/ssh/ssh_host_ed25519_key`. Para añadir un host nuevo hay que registrar su clave pública en `secrets.nix` y re-cifrar los secretos que necesite con `agenix -r`.
-
-## Módulos destacados
-
-### `modules/programs/media/davinci-resolve`
-DaVinci Resolve funcional en GPUs RDNA 4 (RX 9070 XT) con dos workarounds:
-- **Rusticl** como backend OpenCL (el driver oficial de AMD no soporta RDNA 4).
-- **Stub de `libProResRAW.so`** para evitar segfaults por ABI incompatible con GCC bajo Rusticl.
-
-### `modules/hardware/keyboard/tbk-mini`
-Compila y empaqueta el firmware QMK propio para el TBK Mini Splinky (RP2040, Pro Micro clone). Incluye el helper `tbk-mini-flash` y la tarea `just tbk-flash` que espera automáticamente al volumen `RPI-RP2`, monta, copia el `.uf2` y desmonta.
-
-### `modules/programs/keyboard/qmk`
-Wrapper con opciones para declarar teclados QMK con VID/PID: añade udev rules específicas para que WebHID (VIA/Vial) funcione en Chromium, y gestiona el grupo `plugdev`.
-
-### `modules/programs/gaming`
-Activa Steam con Gamescope + GameMode + libs 32-bit y las optimizaciones de plataforma de nix-gaming. Opción: `misc.gaming.enable`.
-
-### `modules/services/enshrouded`
-Servidor dedicado de Enshrouded vía Wine con systemd. Gestiona instalación/actualización automática con SteamCMD, configuración declarativa en JSON y soporte para contraseña vía secreto agenix (nunca expuesta en el store).
-
-### `modules/theming/stylix`
-Tema unificado (colores base16 estilo Catppuccin Mocha, fuente IosevkaTerm Nerd Font, cursor Bibata) propagado a todos los programas integrados con Stylix: terminal, editor, compositor, GTK, etc.
-
-### `modules/theming/qt`
-Theming Qt vía Kvantum (`KvGnomeDark`), coherente con el esquema de Stylix.
+| Documento | Contenido |
+|-----------|-----------|
+| [docs/architecture.md](docs/architecture.md) | Cómo se construye un host: flake, `mkHost`, capas, patrones de módulo, NixOS vs home-manager |
+| [docs/hosts.md](docs/hosts.md) | Cada host en detalle y guía para añadir uno nuevo |
+| [docs/modules.md](docs/modules.md) | Referencia de todos los módulos y sus opciones |
+| [docs/secrets.md](docs/secrets.md) | Gestión de secretos con agenix |
+| [docs/workflow.md](docs/workflow.md) | devShell, recetas de `just`, instalación y despliegue remoto, mantenimiento |
+| [docs/tbk-mini.md](docs/tbk-mini.md) | Firmware QMK/Vial del TBK Mini: compilación, keymap y flasheo |
+| [docs/keybinds.md](docs/keybinds.md) | Atajos de Niri, Ghostty y Neovim |
+| [docs/known-issues.md](docs/known-issues.md) | Problemas detectados en la configuración actual y cosas pendientes |
