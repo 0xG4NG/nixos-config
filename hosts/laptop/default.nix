@@ -10,6 +10,11 @@
 
   age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
+  age.secrets.github_ssh = {
+    file  = ../../secrets/github_ssh.age;
+    owner = "g4ng";
+  };
+
   # --- Módulos compartidos ---
   misc.allowUnfreeNames = [
     "claude-code"

@@ -3,6 +3,7 @@
 {
   imports = [
     ../git.nix
+    ../ssh.nix
     ../../../modules/programs/cli/zsh
     ../../../modules/programs/cli/nvf
     ../../../modules/programs/cli/fastfetch
