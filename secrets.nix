@@ -6,4 +6,5 @@ let
 in
 {
   "secrets/g4ng_password.age".publicKeys = [ admin laptop ];
+  "secrets/github_ssh.age".publicKeys    = [ admin laptop ];
 }
